@@ -1,0 +1,53 @@
+<?php
+/**
+ * Dida Framework  -- A Rapid Development Framework
+ * Copyright (c) Zeupin LLC. (http://zeupin.com)
+ *
+ * Licensed under The MIT License.
+ * Redistributions of files MUST retain the above copyright notice.
+ */
+
+namespace Dida\Form;
+
+/**
+ * Hidden
+ */
+class Hidden extends FormControl
+{
+    /**
+     * Version
+     */
+    const VERSION = '20171116';
+
+
+    public function __construct($name = null, $value = null, $id = null)
+    {
+        $this->properties = [
+            'id'    => $id,
+            'name'  => $name,
+            'value' => $value,
+        ];
+
+        return $this;
+    }
+
+
+    public function build()
+    {
+        $output = [];
+        $output[] = '<input type="hidden"';
+        foreach ($this->properties as $name => $value) {
+            if (!is_null($value)) {
+                // 转义
+                $name = htmlspecialchars($html);
+                $value = htmlspecialchars($value);
+                // 生成
+                $output[] = " $name=\"$value\"";
+            }
+        }
+        $output[] = '>';
+
+        // 返回
+        return implode('', $output);
+    }
+}
