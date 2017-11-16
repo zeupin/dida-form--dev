@@ -24,8 +24,13 @@ class FormTest extends TestCase
 
     public function test_form()
     {
-        $form = (new Form())
-            ->setMethod('delete');
+        $form = new Form();
+        $form->setMethod('delete')
+            ->addHidden('time', time())
+            ->setProp('id', 'abcd')
+            ->setProp('style', '1111')
+            ->done()
+            ->addHidden('token', uniqid());
         $html = $form->build();
         echo Debug::varDump($html);
     }

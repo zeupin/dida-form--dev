@@ -164,18 +164,19 @@ class Form
      * @param mixed $value
      * @param boolean $index   在控件数组中的索引
      *
-     * @return \Dida\Form\FormControl
+     * @return \Dida\Form\FormControl  返回生成的表单控件，供进一步设置
      */
     public function &addHidden($name, $value = null, $index = null)
     {
         $control = new Hidden($name, $value);
+        $control->setForm($this);
 
         if (is_string($index)) {
-            $this->controls[$index] = $control;
-            return $this->controls[$index];
+            $this->controls[$index] = &$control;
         } else {
-            $this->controls[] = $control;
-            return end($this->controls);
+            $this->controls[] = &$control;
         }
+
+        return $control;
     }
 }
