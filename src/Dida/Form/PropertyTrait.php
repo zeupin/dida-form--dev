@@ -19,7 +19,10 @@ trait PropertyTrait
     /**
      * @var array
      */
-    protected $properties = [];
+    protected $properties = [
+        'id'   => null,
+        'name' => null,
+    ];
 
     /**
      * 布尔属性的列表
@@ -79,7 +82,7 @@ trait PropertyTrait
         }
 
         // 一般的属性，则设置值
-        $this->data[$name] = $value;
+        $this->properties[$name] = $value;
 
         return $this;
     }
@@ -120,7 +123,7 @@ trait PropertyTrait
      * 是否是一个bool型的属性
      *
      * @param string $name
-     * 
+     *
      * @return boolean
      */
     protected function isBoolProp($name)
