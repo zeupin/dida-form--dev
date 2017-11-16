@@ -39,7 +39,7 @@ class Hidden extends FormControl
         foreach ($this->properties as $name => $value) {
             if (!is_null($value)) {
                 // 转义
-                $name = htmlspecialchars($html);
+                $name = htmlspecialchars($name);
                 $value = htmlspecialchars($value);
                 // 生成
                 $output[] = " $name=\"$value\"";

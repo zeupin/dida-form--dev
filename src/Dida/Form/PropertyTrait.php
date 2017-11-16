@@ -114,4 +114,17 @@ trait PropertyTrait
             return null;
         }
     }
+
+
+    /**
+     * 是否是一个bool型的属性
+     *
+     * @param string $name
+     * 
+     * @return boolean
+     */
+    protected function isBoolProp($name)
+    {
+        return array_key_exists($name, $this->bool_prop_list);
+    }
 }

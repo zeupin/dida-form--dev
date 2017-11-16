@@ -27,11 +27,6 @@ class Form
     const HTTP_METHOD = 'DIDA_HTTP_METHOD';
 
     /**
-     * 属性组
-     */
-    protected $properties = [];
-
-    /**
      * Form的属性值：get/post/put/patch/delete/head/options
      *
      * @var string
@@ -52,21 +47,32 @@ class Form
     use PropertyTrait;
 
 
+    /**
+     * @param string $action
+     * @param string $method
+     * @param string $name
+     * @param string $id
+     */
     public function __construct($action = null, $method = 'get', $name = null, $id = null)
     {
-        if (!is_null($action) && is_string($action)) {
-            $this->properties['action'] = $action;
-        }
+        // 常规属性
+        $this->properties = [
+            'id'     => $id,
+            'name'   => $name,
+            'method' => 'get',
+            'action' => $action,
+        ];
 
+        // method要特别处理一下
         $this->setMethod($method);
-
-        $this->action = $action;
-        $this->method = $method;
-        $this->name = $name;
-        $this->id = $id;
     }
 
 
+    /**
+     * 构建表单的HTML。
+     *
+     * @return string
+     */
     public function build()
     {
         $output = [];
@@ -102,6 +108,13 @@ class Form
     }
 
 
+    /**
+     * 设置Form的httpmethod
+     *
+     * @param string $method
+     *
+     * @return $this
+     */
     public function setMethod($method)
     {
         $method = strtolower($method);
@@ -122,7 +135,7 @@ class Form
                 // method属性设置为post
                 $this->properties['method'] = 'post';
                 // 实际的method存到一个input:hidden里面
-                $this->addHidden(self::HTTP_METHOD, $method);
+                $this->addHidden(self::HTTP_METHOD, $method, true);
                 break;
 
             default:
@@ -133,18 +146,36 @@ class Form
     }
 
 
+    /**
+     * 获取表单的httpmethod。
+     *
+     * @return string
+     */
     public function getMethod()
     {
         return $this->method;
     }
 
 
-    public function addHidden($name = null, $value = null)
+    /**
+     * 新增一个hidden型的表单控件。
+     *
+     * @param string $name
+     * @param mixed $value
+     * @param boolean $index   在控件数组中的索引
+     *
+     * @return \Dida\Form\FormControl
+     */
+    public function &addHidden($name, $value = null, $index = null)
     {
-        if ($name === null) {
-            $this->controls[] = new Hidden($name, $value);
+        $control = new Hidden($name, $value);
+
+        if (is_string($index)) {
+            $this->controls[$index] = $control;
+            return $this->controls[$index];
         } else {
-            $this->controls[$name] = new Hidden($name, $value);
+            $this->controls[] = $control;
+            return end($this->controls);
         }
     }
 }
