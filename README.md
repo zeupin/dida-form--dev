@@ -7,11 +7,8 @@
 
 ## 版权声明
 
-版权所有 (c) 2017 上海宙品信息科技有限公司。
-Copyright (c) Zeupin LLC. <http://zeupin.com>
+版权所有 (c)2017 上海宙品信息科技有限公司。<br>Copyright (c)2017 Zeupin LLC. <http://zeupin.com>
 
-源代码采用MIT授权协议。
-Licensed under The MIT License.
+源代码采用MIT授权协议。<br>Licensed under The MIT License.
 
-如需在项目中使用，必须保留源代码中的完整版权声明。
-Redistributions of files MUST retain the above copyright notice.
+如需在项目中使用，必须保留源代码中的完整版权声明。<br>Redistributions of files MUST retain the above copyright notice.
