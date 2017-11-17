@@ -31,13 +31,13 @@ class Hidden extends FormControl
     {
         $output = [];
         $output[] = '<input type="hidden"';
-        foreach ($this->properties as $name => $value) {
+        foreach ($this->properties as $prop => $value) {
             if (!is_null($value)) {
                 // 转义
-                $name = htmlspecialchars($name);
+                $prop = htmlspecialchars($prop);
                 $value = htmlspecialchars($value);
                 // 生成
-                $output[] = " $name=\"$value\"";
+                $output[] = " $prop=\"$value\"";
             }
         }
         $output[] = '>';
