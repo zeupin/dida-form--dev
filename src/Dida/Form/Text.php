@@ -22,7 +22,7 @@ class Text extends FormControl
 
     public function setValue($value)
     {
-        $this->properties['value'] = $value;
+        $this->setProp('value', $value);
         return $this;
     }
 
@@ -31,25 +31,19 @@ class Text extends FormControl
     {
         $output = [];
 
-        $for = ($this->properties['name']) ? " for=\"{$this->properties['name']}\"" : '';
+        $name = $this->props->get('name');
+        $for = ($name) ? " for=\"{$name}\"" : '';
 
-        $required = ($this->required) ? ' *' : '';
+        $required = ($this->props->get('required')) ? ' *' : '';
 
         // 对label的处理
         if ($this->label) {
             $output[] = "<label{$for}>{$this->label}{$required}</label>";
         }
 
+        // input:text
         $output[] = '<input type="text"';
-        foreach ($this->properties as $prop => $value) {
-            if (!is_null($value)) {
-                // 转义
-                $prop = htmlspecialchars($prop);
-                $value = htmlspecialchars($value);
-                // 生成
-                $output[] = " $prop=\"$value\"";
-            }
-        }
+        $output[] = $this->props->build();
         $output[] = '>';
 
         // 返回

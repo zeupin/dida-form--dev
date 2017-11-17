@@ -22,9 +22,9 @@ class Form
     const VERSION = '20171116';
 
     /**
-     * HTTP_METHOD的表单域的名称
+     * REQUEST_METHOD的表单域的名称
      */
-    const HTTP_METHOD = 'DIDA_HTTP_METHOD';
+    const REQUEST_METHOD = 'DIDA_REQUEST_METHOD';
 
     /**
      * Form的属性值：get/post/put/patch/delete/head/options
@@ -50,11 +50,10 @@ class Form
         'text'   => 'Dida\\Form\\Text',
     ];
 
-
     /**
-     * 对属性的操作
+     * 属性集
      */
-    use PropertyTrait;
+    protected $props = null;
 
 
     /**
@@ -66,12 +65,12 @@ class Form
     public function __construct($action = null, $method = 'get', $name = null, $id = null)
     {
         // 常规属性
-        $this->properties = [
+        $this->props = new PropertySet([
             'id'     => $id,
             'name'   => $name,
             'method' => 'get',
             'action' => $action,
-        ];
+        ]);
 
         // method要特别处理一下
         $this->setMethod($method);
@@ -91,18 +90,8 @@ class Form
         $output[] = '<form';
 
         // 构建属性
-        foreach ($this->properties as $name => $value) {
-            if ($value !== null) {
-                $name = htmlspecialchars($name);
+        $output[] = $this->props->build();
 
-                if ($this->isBoolProp($name)) {
-                    $output[] = " $name";
-                } else {
-                    $value = htmlspecialchars($value);
-                    $output[] = " $name=\"$value\"";
-                }
-            }
-        }
         $output[] = '>';
 
         // 构建表单控件
@@ -132,8 +121,8 @@ class Form
             case 'get':
             case 'post':
                 $this->method = $method;
-                $this->properties['method'] = $method;
-                unset($this->controls[self::HTTP_METHOD]);
+                $this->props->set('method', $method);
+                unset($this->controls[self::REQUEST_METHOD]);
                 break;
 
             case 'put':
@@ -143,9 +132,9 @@ class Form
             case 'options':
                 $this->method = $method;
                 // method属性设置为post
-                $this->properties['method'] = 'post';
+                $this->props->set('method', 'post');
                 // 实际的method存到一个input:hidden里面
-                $this->add('hidden', self::HTTP_METHOD, $method, null, self::HTTP_METHOD);
+                $this->add('hidden', self::REQUEST_METHOD, $method, null, self::REQUEST_METHOD);
                 break;
 
             default:
@@ -164,6 +153,19 @@ class Form
     public function getMethod()
     {
         return $this->method;
+    }
+
+
+    public function setProp($name, $value)
+    {
+        $this->props->set($name, $value);
+        return $this;
+    }
+
+
+    public function getProp($name)
+    {
+        return $this->props->get($name);
     }
 
 

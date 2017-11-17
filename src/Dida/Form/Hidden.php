@@ -22,27 +22,13 @@ class Hidden extends FormControl
 
     public function setValue($value)
     {
-        $this->properties['value'] = $value;
+        $this->setProp('value', $value);
         return $this;
     }
 
 
     public function build()
     {
-        $output = [];
-        $output[] = '<input type="hidden"';
-        foreach ($this->properties as $prop => $value) {
-            if (!is_null($value)) {
-                // 转义
-                $prop = htmlspecialchars($prop);
-                $value = htmlspecialchars($value);
-                // 生成
-                $output[] = " $prop=\"$value\"";
-            }
-        }
-        $output[] = '>';
-
-        // 返回
-        return implode('', $output);
+        return '<input type="hidden"' . $this->props->build() . '>';
     }
 }

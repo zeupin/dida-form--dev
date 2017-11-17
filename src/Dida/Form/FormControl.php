@@ -32,17 +32,11 @@ abstract class FormControl
     protected $label = null;
 
     /**
-     * 是否是必填项。
+     * 属性集
      *
-     * @var boolean
+     * @var \Dida\Form\PropertySet
      */
-    protected $required = false;
-
-
-    /**
-     * 属性的设置和读取
-     */
-    use PropertyTrait;
+    protected $props = null;
 
 
     /**
@@ -65,14 +59,14 @@ abstract class FormControl
      */
     public function __construct($name = null, $id = null)
     {
-        $this->properties['id'] = $id;
-        $this->properties['name'] = $name;
+        $this->props = new PropertySet([
+            'id'   => $id,
+            'name' => $name,
+        ]);
     }
 
 
     /**
-     * 指向Form。
-     *
      * @param \Dida\Form\Form $form
      */
     public function setForm(&$form)
@@ -80,6 +74,19 @@ abstract class FormControl
         $this->form = $form;
 
         return $this;
+    }
+
+
+    public function setProp($name, $value)
+    {
+        $this->props->set($name, $value);
+        return $this;
+    }
+
+
+    public function getProp($name)
+    {
+        return $this->props->get($name);
     }
 
 
@@ -102,7 +109,43 @@ abstract class FormControl
      */
     public function required($bool = true)
     {
-        $this->required = boolval($bool);
+        if ($bool) {
+            $this->props->set('required', true);
+        } else {
+            $this->props->remove('required');
+        }
+        return $this;
+    }
+
+
+    /**
+     * 是否禁用。
+     *
+     * @param boolean $bool
+     */
+    public function disabled($bool = true)
+    {
+        if ($bool) {
+            $this->props->set('disabled', true);
+        } else {
+            $this->props->remove('disabled');
+        }
+        return $this;
+    }
+
+
+    /**
+     * 是否只读。
+     *
+     * @param boolean $bool
+     */
+    public function readonly($bool = true)
+    {
+        if ($bool) {
+            $this->props->set('readonly', true);
+        } else {
+            $this->props->remove('readonly');
+        }
         return $this;
     }
 
