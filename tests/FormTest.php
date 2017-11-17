@@ -39,8 +39,22 @@ class FormTest extends TestCase
     public function test_text()
     {
         $form = new Form();
-        $text = $form->add('text', 'name', '')
+        $text = $form->add('text', 'name')
             ->label("姓名")
+            ->setValue('your name')
+            ->required();
+
+        $html = $form->build();
+        echo Debug::varDump($html);
+    }
+
+
+    public function test_password()
+    {
+        $form = new Form();
+        $text = $form->add('password', 'pwd', '')
+            ->label("密码")
+            ->setValue('your password')
             ->required();
 
         $html = $form->build();
