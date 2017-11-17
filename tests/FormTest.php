@@ -26,11 +26,23 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $form->setMethod('delete')
-            ->addHidden('time', time())
+            ->add('hidden', 'time', time())
             ->setProp('id', 'abcd')
             ->setProp('style', '1111')
             ->done()
-            ->addHidden('token', uniqid());
+            ->add('hidden', 'token', uniqid());
+        $html = $form->build();
+        echo Debug::varDump($html);
+    }
+
+
+    public function test_text()
+    {
+        $form = new Form();
+        $text = $form->add('text', 'name', '')
+            ->label("姓名")
+            ->required();
+
         $html = $form->build();
         echo Debug::varDump($html);
     }
