@@ -17,17 +17,12 @@ class Hidden extends FormControl
     /**
      * Version
      */
-    const VERSION = '20171116';
+    const VERSION = '20171117';
 
 
-    public function __construct($name = null, $value = null, $id = null)
+    public function setValue($value)
     {
-        $this->properties = [
-            'id'    => $id,
-            'name'  => $name,
-            'value' => $value,
-        ];
-
+        $this->properties['value'] = $value;
         return $this;
     }
 

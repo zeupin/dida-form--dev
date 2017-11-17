@@ -40,6 +40,16 @@ class Form
      */
     protected $controls = [];
 
+    /**
+     * 控件类型对应的类名
+     *
+     * @var array
+     */
+    protected $control_types = [
+        'hidden' => 'Dida\\Form\\Hidden',
+        'text'   => 'Dida\\Form\\Text',
+    ];
+
 
     /**
      * 对属性的操作
@@ -135,7 +145,7 @@ class Form
                 // method属性设置为post
                 $this->properties['method'] = 'post';
                 // 实际的method存到一个input:hidden里面
-                $this->addHidden(self::HTTP_METHOD, $method, true);
+                $this->add('hidden', self::HTTP_METHOD, $method, null, self::HTTP_METHOD);
                 break;
 
             default:
@@ -158,25 +168,57 @@ class Form
 
 
     /**
-     * 新增一个hidden型的表单控件。
+     * 注册一个控件类型。
      *
+     * @param string $type
+     * @param string $class
+     */
+    public function registerType($type, $class)
+    {
+        $type = strtolower($type);
+        $this->control_types[$type] = $class;
+
+        return $this;
+    }
+
+
+    /**
+     * 向Form中新增一个控件。
+     *
+     * @param string $type
      * @param string $name
-     * @param mixed $value
-     * @param boolean $index   在控件数组中的索引
+     * @param string $value
+     * @param string $index
      *
      * @return \Dida\Form\FormControl  返回生成的表单控件，供进一步设置
+     *
+     * @throws FormException
      */
-    public function &addHidden($name, $value = null, $index = null)
+    public function &add($type, $name = null, $value = null, $id = null, $index = null)
     {
-        $control = new Hidden($name, $value);
+        // 检查类型是否存在
+        $type = strtolower($type);
+        if (!array_key_exists($type, $this->control_types)) {
+            throw new FormException($type, FormException::TYPE_NOT_FOUND);
+        }
+
+        // 生成控件
+        $control = new $this->control_types[$type]($name, $id);
+
+        // 设置值
+        $control->setValue($value);
+
+        // 把控件的Form属性指向当前Form
         $control->setForm($this);
 
+        // 根据$index，决定把control加到当前Form的最后，还是覆盖掉同一index的原有控件。
         if (is_string($index)) {
             $this->controls[$index] = &$control;
         } else {
             $this->controls[] = &$control;
         }
 
+        // 返回control的引用
         return $control;
     }
 }

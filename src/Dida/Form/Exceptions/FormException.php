@@ -17,7 +17,7 @@ class FormException extends \Exception
     /**
      * Version
      */
-    const VERSION = '20171116';
+    const VERSION = '20171117';
 
     //////////////////////////////////////////////////////////
     // Form 类
@@ -29,6 +29,11 @@ class FormException extends \Exception
      * 一个有效的method只能是 get/post/put/patch/delete/head/options 之一。
      */
     const INVALID_METHOD = 1001;
+
+    /**
+     * 控件类型未找到。
+     */
+    const TYPE_NOT_FOUND = 1002;
 
     //////////////////////////////////////////////////////////
     // FormControl 类

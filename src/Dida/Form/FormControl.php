@@ -17,7 +17,7 @@ abstract class FormControl
     /**
      * Version
      */
-    const VERSION = '20171116';
+    const VERSION = '20171117';
 
     /**
      * 指向Form。
@@ -37,6 +37,25 @@ abstract class FormControl
      * build当前control
      */
     abstract public function build();
+
+
+    /**
+     * 设置值
+     */
+    abstract public function setValue($value);
+
+
+    /**
+     * 控件初始化
+     *
+     * @param string $name
+     * @param string $id
+     */
+    public function __construct($name = null, $id = null)
+    {
+        $this->properties['id'] = $id;
+        $this->properties['name'] = $name;
+    }
 
 
     /**
