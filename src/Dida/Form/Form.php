@@ -46,8 +46,9 @@ class Form
      * @var array
      */
     protected $control_types = [
-        'hidden' => 'Dida\\Form\\Hidden',
-        'text'   => 'Dida\\Form\\Text',
+        'hidden'   => 'Dida\\Form\\Hidden',
+        'text'     => 'Dida\\Form\\Text',
+        'password' => 'Dida\\Form\\Password',
     ];
 
     /**
