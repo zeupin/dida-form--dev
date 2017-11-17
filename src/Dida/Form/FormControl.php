@@ -26,6 +26,18 @@ abstract class FormControl
      */
     protected $form = null;
 
+    /**
+     * @var string
+     */
+    protected $label = null;
+
+    /**
+     * 是否是必填项。
+     *
+     * @var boolean
+     */
+    protected $required = false;
+
 
     /**
      * 属性的设置和读取
@@ -67,6 +79,30 @@ abstract class FormControl
     {
         $this->form = $form;
 
+        return $this;
+    }
+
+
+    /**
+     * 设置label。
+     *
+     * @param string $label
+     */
+    public function label($label)
+    {
+        $this->label = $label;
+        return $this;
+    }
+
+
+    /**
+     * 是否是必填项。
+     *
+     * @param boolean $bool
+     */
+    public function required($bool = true)
+    {
+        $this->required = boolval($bool);
         return $this;
     }
 
