@@ -25,27 +25,6 @@ class Button extends FormControl
     protected $value = null;
 
 
-    public function setValue($value)
-    {
-        $this->value = $value;
-        return $this;
-    }
-
-
-    public function label($label)
-    {
-        $this->label = htmlspecialchars($label);
-        return $this;
-    }
-
-
-    public function labelHtml($lable)
-    {
-        $this->label = $lable;
-        return $this;
-    }
-
-
     public function build()
     {
         $output = [];
@@ -53,9 +32,8 @@ class Button extends FormControl
         // opentag
         $output[] = '<button type="button"';
         $output[] = $this->props->build();
-        if (isset($this->value)) {
-            $value = htmlspecialchars($this->value);
-            $output[] = ' value="' . $value . '"';
+        if (isset($this->valueHtml)) {
+            $output[] = ' value="' . $this->valueHtml . '"';
         }
         $output[] = '>';
 
