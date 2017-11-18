@@ -54,6 +54,7 @@ class Form
         'reset'      => 'Dida\\Form\\Reset',
         'submit'     => 'Dida\\Form\\Submit',
         'radiogroup' => 'Dida\\Form\\RadioGroup',
+        'statictext' => 'Dida\\Form\\StaticText',
     ];
 
     /**

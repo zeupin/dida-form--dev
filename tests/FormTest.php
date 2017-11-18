@@ -121,7 +121,7 @@ class FormTest extends TestCase
         $html = $form->build();
         echo Debug::varDump($html);
 
-        $pos = mb_strpos($html,'<input type="radio" name="gender" value="1" checked>男<input type="radio" name="gender" value="0">女');
+        $pos = mb_strpos($html, '<input type="radio" name="gender" value="1" checked>男<input type="radio" name="gender" value="0">女');
         $this->assertGreaterThanOrEqual(0, $pos);
     }
 
@@ -135,7 +135,7 @@ class FormTest extends TestCase
         $html = $form->build();
         echo Debug::varDump($html);
 
-        $pos = mb_strpos($html,'<input type="radio" name="gender" value="male">male<input type="radio" name="gender" value="female">female');
+        $pos = mb_strpos($html, '<input type="radio" name="gender" value="male">male<input type="radio" name="gender" value="female">female');
         $this->assertGreaterThanOrEqual(0, $pos);
     }
 
@@ -153,7 +153,22 @@ class FormTest extends TestCase
         $html = $form->build();
         echo Debug::varDump($html);
 
-        $pos = mb_strpos($html,'<input type="radio" name="gender" value="0" checked>');
+        $pos = mb_strpos($html, '<input type="radio" name="gender" value="0" checked>');
+        $this->assertGreaterThanOrEqual(0, $pos);
+    }
+
+
+    public function test_statictext_1()
+    {
+        $form = new Form();
+        $control = $form->add('statictext')
+            ->label("STATIC TEXT")
+            ->value('some words');
+
+        $html = $form->build();
+        echo Debug::varDump($html);
+
+        $pos = mb_strpos($html, '<label>STATIC TEXT</label>some words');
         $this->assertGreaterThanOrEqual(0, $pos);
     }
 }
