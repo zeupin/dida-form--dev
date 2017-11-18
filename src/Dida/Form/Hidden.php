@@ -20,8 +20,10 @@ class Hidden extends FormControl
     const VERSION = '20171117';
 
 
-    public function setValue($value)
+    public function value($value)
     {
+        parent::value($value);
+
         $this->setProp('value', $value);
         return $this;
     }
