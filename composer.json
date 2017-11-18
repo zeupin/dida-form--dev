@@ -1,0 +1,23 @@
+{
+  "name": "dida/form",
+  "description": "A Form HTML Generator.",
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://github.com/zeupin/dida-form",
+  "authors": [
+    {
+      "name": "Macc Liu",
+      "email": "maccliu@zeupin.com",
+      "homepage": "https://github.com/maccliu"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^5.5 || ^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dida\\": "src/Dida"
+    }
+  }
+}
