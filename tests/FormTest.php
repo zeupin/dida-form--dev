@@ -60,4 +60,18 @@ class FormTest extends TestCase
         $html = $form->build();
         echo Debug::varDump($html);
     }
+
+
+    public function test_textarea()
+    {
+        $form = new Form();
+        $text = $form->add('textarea', 'content', 'id_content')
+            ->label("介绍")
+            ->cols(40)->rows(5)
+            ->setValue("你的介绍")
+            ->required();
+
+        $html = $form->build();
+        echo Debug::varDump($html);
+    }
 }

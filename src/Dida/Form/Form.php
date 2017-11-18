@@ -49,6 +49,7 @@ class Form
         'hidden'   => 'Dida\\Form\\Hidden',
         'text'     => 'Dida\\Form\\Text',
         'password' => 'Dida\\Form\\Password',
+        'textarea' => 'Dida\\Form\\TextArea',
     ];
 
     /**
