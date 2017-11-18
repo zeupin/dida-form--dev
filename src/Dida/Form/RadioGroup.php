@@ -17,11 +17,6 @@ class RadioGroup extends FormControl
     /**
      * @var string
      */
-    protected $value = null;
-
-    /**
-     * @var string
-     */
     protected $defaultValue = null;
 
     /**
@@ -71,7 +66,7 @@ class RadioGroup extends FormControl
         }
 
         // 逐一处理
-        $props = $this->props->build();
+        $props = $this->props->build(['id']);
         foreach ($this->options as $caption => $option) {
             if (is_int($caption)) {
                 $caption = $option;

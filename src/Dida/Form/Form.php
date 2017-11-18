@@ -49,12 +49,13 @@ class Form
         'hidden'     => 'Dida\\Form\\Hidden',
         'text'       => 'Dida\\Form\\Text',
         'password'   => 'Dida\\Form\\Password',
-        'textarea'   => 'Dida\\Form\\TextArea',
+        'statictext' => 'Dida\\Form\\StaticText',
         'button'     => 'Dida\\Form\\Button',
         'reset'      => 'Dida\\Form\\Reset',
         'submit'     => 'Dida\\Form\\Submit',
+        'textarea'   => 'Dida\\Form\\TextArea',
         'radiogroup' => 'Dida\\Form\\RadioGroup',
-        'statictext' => 'Dida\\Form\\StaticText',
+        'select'     => 'Dida\\Form\\Select',
     ];
 
     /**

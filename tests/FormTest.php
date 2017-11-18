@@ -122,7 +122,7 @@ class FormTest extends TestCase
         echo Debug::varDump($html);
 
         $pos = mb_strpos($html, '<input type="radio" name="gender" value="1" checked>男<input type="radio" name="gender" value="0">女');
-        $this->assertGreaterThanOrEqual(0, $pos);
+        $this->assertGreaterThan(0, $pos);
     }
 
 
@@ -136,7 +136,7 @@ class FormTest extends TestCase
         echo Debug::varDump($html);
 
         $pos = mb_strpos($html, '<input type="radio" name="gender" value="male">male<input type="radio" name="gender" value="female">female');
-        $this->assertGreaterThanOrEqual(0, $pos);
+        $this->assertGreaterThan(0, $pos);
     }
 
 
@@ -154,7 +154,7 @@ class FormTest extends TestCase
         echo Debug::varDump($html);
 
         $pos = mb_strpos($html, '<input type="radio" name="gender" value="0" checked>');
-        $this->assertGreaterThanOrEqual(0, $pos);
+        $this->assertGreaterThan(0, $pos);
     }
 
 
@@ -169,6 +169,91 @@ class FormTest extends TestCase
         echo Debug::varDump($html);
 
         $pos = mb_strpos($html, '<label>STATIC TEXT</label>some words');
-        $this->assertGreaterThanOrEqual(0, $pos);
+        $this->assertGreaterThan(0, $pos);
+    }
+
+
+    public function test_select_1()
+    {
+        $form = new Form();
+        $control = $form->add('select', 'currency');
+        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD']);
+        $html = $form->build();
+        echo Debug::varDump($html);
+
+        $pos = mb_strpos($html, '<select name="currency"><option>CNY</option><option>USD</option><option>JPY</option><option>AUD</option></select>');
+        $this->assertGreaterThan(0, $pos);
+    }
+
+
+    public function test_select_2()
+    {
+        $form = new Form();
+        $control = $form->add('select', 'currency');
+        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD']);
+        $control->optionValues(['cny', 'usd', null, 'aud']);
+        $html = $form->build();
+        echo Debug::varDump($html);
+
+        $pos = mb_strpos($html, '<select name="currency"><option value="cny">CNY</option><option value="usd">USD</option><option>JPY</option><option value="aud">AUD</option></select>');
+        $this->assertGreaterThan(0, $pos);
+    }
+
+
+    public function test_select_3()
+    {
+        $form = new Form();
+        $control = $form->add('select', 'currency');
+        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->optionValues(['cny', 'usd', null, 'aud'])
+            ->value('cny');
+        $html = $form->build();
+        echo Debug::varDump($html);
+
+        $pos = mb_strpos($html, '<select name="currency"><option value="cny" selected>CNY</option><option value="usd">USD</option><option>JPY</option><option value="aud">AUD</option></select>');
+        $this->assertGreaterThan(0, $pos);
+    }
+
+
+    public function test_select_4()
+    {
+        $form = new Form();
+        $control = $form->add('select', 'currency');
+        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->optionValues(['cny', 'usd', null, 'aud'])
+            ->values(['cny', 'aud']);
+        $html = $form->build();
+        echo Debug::varDump($html);
+
+        $pos = mb_strpos($html, '<option value="cny" selected>CNY</option><option value="usd">USD</option><option>JPY</option><option value="aud" selected>AUD</option>');
+        $this->assertGreaterThan(0, $pos);
+    }
+
+
+    public function test_select_5()
+    {
+        $form = new Form();
+        $control = $form->add('select', 'currency');
+        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->values(['cny', 'aud']);
+        $html = $form->build();
+        echo Debug::varDump($html);
+
+        $pos = mb_strpos($html, '<option>CNY</option><option>USD</option><option>JPY</option><option>AUD</option>');
+        $this->assertGreaterThan(0, $pos);
+    }
+
+
+    public function test_select_6()
+    {
+        $form = new Form();
+        $control = $form->add('select', 'currency');
+        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->values(['USD', 'JPY']);
+        $html = $form->build();
+        echo Debug::varDump($html);
+
+        $pos = mb_strpos($html, '<option>CNY</option><option selected>USD</option><option selected>JPY</option><option>AUD</option></select>');
+        $this->assertGreaterThan(0, $pos);
     }
 }
