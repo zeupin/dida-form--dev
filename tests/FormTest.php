@@ -81,8 +81,7 @@ class FormTest extends TestCase
         $form = new Form();
         $control = $form->add('button', null, null)
             ->label("介绍")
-            ->value("你的介绍")
-            ->required();
+            ->value("你的介绍");
 
         $html = $form->build();
         echo Debug::varDump($html);
@@ -121,6 +120,9 @@ class FormTest extends TestCase
         ]);
         $html = $form->build();
         echo Debug::varDump($html);
+
+        $pos = mb_strpos($html,'<input type="radio" name="gender" value="1" checked>男<input type="radio" name="gender" value="0">女');
+        $this->assertGreaterThanOrEqual(0, $pos);
     }
 
 
@@ -129,10 +131,12 @@ class FormTest extends TestCase
         $form = new Form();
         $control = $form->add('radiogroup', 'gender')
             ->label("性别")
-            ->defaultValue(1)
             ->options(['male', 'female',]);
         $html = $form->build();
         echo Debug::varDump($html);
+
+        $pos = mb_strpos($html,'<input type="radio" name="gender" value="male">male<input type="radio" name="gender" value="female">female');
+        $this->assertGreaterThanOrEqual(0, $pos);
     }
 
 
@@ -148,5 +152,8 @@ class FormTest extends TestCase
         ]);
         $html = $form->build();
         echo Debug::varDump($html);
+
+        $pos = mb_strpos($html,'<input type="radio" name="gender" value="0" checked>');
+        $this->assertGreaterThanOrEqual(0, $pos);
     }
 }
