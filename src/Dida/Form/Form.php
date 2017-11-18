@@ -51,6 +51,8 @@ class Form
         'password' => 'Dida\\Form\\Password',
         'textarea' => 'Dida\\Form\\TextArea',
         'button'   => 'Dida\\Form\\Button',
+        'reset'    => 'Dida\\Form\\Reset',
+        'submit'   => 'Dida\\Form\\Submit',
     ];
 
     /**

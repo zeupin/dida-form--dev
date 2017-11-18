@@ -17,7 +17,7 @@ abstract class FormControl
     /**
      * Version
      */
-    const VERSION = '20171117';
+    const VERSION = '20171118';
 
     /**
      * 指向Form。
@@ -87,6 +87,27 @@ abstract class FormControl
     public function getProp($name)
     {
         return $this->props->get($name);
+    }
+
+
+    public function addClass($class)
+    {
+        $this->props->addClass($class);
+        return $this;
+    }
+
+
+    public function removeClass($class)
+    {
+        $this->props->removeClass($class);
+        return $this;
+    }
+
+
+    public function addStyle($style)
+    {
+        $this->props->addStyle($style);
+        return $this;
     }
 
 

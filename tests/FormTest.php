@@ -87,4 +87,24 @@ class FormTest extends TestCase
         $html = $form->build();
         echo Debug::varDump($html);
     }
+
+
+    public function test_reset()
+    {
+        $form = new Form();
+        $text = $form->add('reset', null, null);
+
+        $html = $form->build();
+        echo Debug::varDump($html);
+    }
+
+
+    public function test_submit()
+    {
+        $form = new Form();
+        $text = $form->add('submit', null, null);
+
+        $html = $form->build();
+        echo Debug::varDump($html);
+    }
 }
