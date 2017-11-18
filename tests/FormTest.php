@@ -39,9 +39,9 @@ class FormTest extends TestCase
     public function test_text()
     {
         $form = new Form();
-        $text = $form->add('text', 'name')
+        $control = $form->add('text', 'name')
             ->label("姓名")
-            ->setValue('your name')
+            ->value('your name')
             ->required();
 
         $html = $form->build();
@@ -52,9 +52,9 @@ class FormTest extends TestCase
     public function test_password()
     {
         $form = new Form();
-        $text = $form->add('password', 'pwd', '')
+        $control = $form->add('password', 'pwd', '')
             ->label("密码")
-            ->setValue('your password')
+            ->value('your password')
             ->required();
 
         $html = $form->build();
@@ -65,10 +65,10 @@ class FormTest extends TestCase
     public function test_textarea()
     {
         $form = new Form();
-        $text = $form->add('textarea', 'content', 'id_content')
+        $control = $form->add('textarea', 'content', 'id_content')
             ->label("介绍")
             ->cols(40)->rows(5)
-            ->setValue("你的介绍")
+            ->value("你的介绍")
             ->required();
 
         $html = $form->build();
@@ -79,9 +79,9 @@ class FormTest extends TestCase
     public function test_button()
     {
         $form = new Form();
-        $text = $form->add('button', null, null)
+        $control = $form->add('button', null, null)
             ->label("介绍")
-            ->setValue("你的介绍")
+            ->value("你的介绍")
             ->required();
 
         $html = $form->build();
@@ -92,7 +92,7 @@ class FormTest extends TestCase
     public function test_reset()
     {
         $form = new Form();
-        $text = $form->add('reset', null, null);
+        $control = $form->add('reset', null, null);
 
         $html = $form->build();
         echo Debug::varDump($html);
@@ -102,8 +102,50 @@ class FormTest extends TestCase
     public function test_submit()
     {
         $form = new Form();
-        $text = $form->add('submit', null, null);
+        $control = $form->add('submit', null, null);
 
+        $html = $form->build();
+        echo Debug::varDump($html);
+    }
+
+
+    public function test_radiogroup_0()
+    {
+        $form = new Form();
+        $control = $form->add('radiogroup', 'gender')
+            ->label("性别")
+            ->value(1)
+            ->options([
+            '男' => 1,
+            '女' => 0,
+        ]);
+        $html = $form->build();
+        echo Debug::varDump($html);
+    }
+
+
+    public function test_radiogroup_1()
+    {
+        $form = new Form();
+        $control = $form->add('radiogroup', 'gender')
+            ->label("性别")
+            ->defaultValue(1)
+            ->options(['male', 'female',]);
+        $html = $form->build();
+        echo Debug::varDump($html);
+    }
+
+
+    public function test_radiogroup_2()
+    {
+        $form = new Form();
+        $control = $form->add('radiogroup', 'gender')
+            ->label("性别")
+            ->defaultValue(0)
+            ->options([
+            '男' => 1,
+            '女' => 0,
+        ]);
         $html = $form->build();
         echo Debug::varDump($html);
     }

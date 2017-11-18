@@ -19,18 +19,6 @@ class TextArea extends FormControl
      */
     const VERSION = '20171118';
 
-    /**
-     * @var string
-     */
-    protected $value = null;
-
-
-    public function setValue($value)
-    {
-        $this->value = $value;
-        return $this;
-    }
-
 
     public function setTextValue($text)
     {

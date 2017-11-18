@@ -27,28 +27,32 @@ abstract class FormControl
     protected $form = null;
 
     /**
-     * @var string
-     */
-    protected $label = null;
-
-    /**
      * 属性集
      *
      * @var \Dida\Form\PropertySet
      */
     protected $props = null;
 
+    /**
+     * @var string
+     */
+    protected $label = null;
+
+    /**
+     * @var string
+     */
+    protected $value = null;
+
+    /**
+     * @var string
+     */
+    protected $valueHtml = null;
+
 
     /**
      * build当前control
      */
     abstract public function build();
-
-
-    /**
-     * 设置值
-     */
-    abstract public function setValue($value);
 
 
     /**
@@ -112,13 +116,33 @@ abstract class FormControl
 
 
     /**
+     * 设置value。
+     */
+    public function value($value)
+    {
+        if (is_null($value)) {
+            $this->value = null;
+            $this->valueHtml = null;
+            return $this;
+        }
+
+        if (!is_string($value)) {
+            $value = strval($value);
+        }
+        $this->value = $value;
+        $this->valueHtml = htmlspecialchars($value);
+        return $this;
+    }
+
+
+    /**
      * 设置label。
      *
      * @param string $label
      */
     public function label($label)
     {
-        $this->label = $label;
+        $this->label = htmlspecialchars($label);
         return $this;
     }
 

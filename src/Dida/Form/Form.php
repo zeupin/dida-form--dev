@@ -46,13 +46,14 @@ class Form
      * @var array
      */
     protected $control_types = [
-        'hidden'   => 'Dida\\Form\\Hidden',
-        'text'     => 'Dida\\Form\\Text',
-        'password' => 'Dida\\Form\\Password',
-        'textarea' => 'Dida\\Form\\TextArea',
-        'button'   => 'Dida\\Form\\Button',
-        'reset'    => 'Dida\\Form\\Reset',
-        'submit'   => 'Dida\\Form\\Submit',
+        'hidden'     => 'Dida\\Form\\Hidden',
+        'text'       => 'Dida\\Form\\Text',
+        'password'   => 'Dida\\Form\\Password',
+        'textarea'   => 'Dida\\Form\\TextArea',
+        'button'     => 'Dida\\Form\\Button',
+        'reset'      => 'Dida\\Form\\Reset',
+        'submit'     => 'Dida\\Form\\Submit',
+        'radiogroup' => 'Dida\\Form\\RadioGroup',
     ];
 
     /**
@@ -213,7 +214,7 @@ class Form
         $control = new $this->control_types[$type]($name, $id);
 
         // 设置值
-        $control->setValue($value);
+        $control->value($value);
 
         // 把控件的Form属性指向当前Form
         $control->setForm($this);
