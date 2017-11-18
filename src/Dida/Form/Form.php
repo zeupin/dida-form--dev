@@ -50,6 +50,7 @@ class Form
         'text'     => 'Dida\\Form\\Text',
         'password' => 'Dida\\Form\\Password',
         'textarea' => 'Dida\\Form\\TextArea',
+        'button'   => 'Dida\\Form\\Button',
     ];
 
     /**

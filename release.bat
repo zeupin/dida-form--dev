@@ -1,3 +1,5 @@
+@echo off
+
 set TARGET_DIR=D:\Projects\github\dida-form
 
 copy /y  README.md      "%TARGET_DIR%\"
@@ -9,4 +11,6 @@ del /f /s /q            "%TARGET_DIR%\src\*.*"
 rd /s /q                "%TARGET_DIR%\src\"
 xcopy /y /s  src        "%TARGET_DIR%\src\"
 
-ping -n 5 127.0.0.1>nul
+php phpcodeclean.php
+
+ping -n 20 127.0.0.1>nul

@@ -74,4 +74,17 @@ class FormTest extends TestCase
         $html = $form->build();
         echo Debug::varDump($html);
     }
+
+
+    public function test_button()
+    {
+        $form = new Form();
+        $text = $form->add('button', null, null)
+            ->label("介绍")
+            ->setValue("你的介绍")
+            ->required();
+
+        $html = $form->build();
+        echo Debug::varDump($html);
+    }
 }
