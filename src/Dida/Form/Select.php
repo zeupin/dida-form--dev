@@ -15,6 +15,11 @@ namespace Dida\Form;
 class Select extends FormControl
 {
     /**
+     * Version
+     */
+    const VERSION = '20171119';
+
+    /**
      * @var \Dida\Form\OptionSet
      */
     protected $options = null;
@@ -28,33 +33,52 @@ class Select extends FormControl
     }
 
 
-    public function optionCaptions($captions)
+    public function addOption($caption = null, $value = null, $checked = false, $disabled = false)
     {
-        $this->options->setCaptions($captions);
+        $this->options->add(null, $caption, $value, $checked, $disabled);
         return $this;
     }
 
 
-    public function optionValues($values)
+    public function setCaptions($array)
     {
-        $this->options->setValues($values);
+        $this->options->setCaptions($array);
+        return $this;
+    }
+
+
+    public function setValues($array)
+    {
+        $this->options->setValues($array);
+        return $this;
+    }
+
+
+    public function setCheckeds($array)
+    {
+        $this->options->setCheckeds($array);
+        return $this;
+    }
+
+
+    public function setDsiableds($array)
+    {
+        $this->options->setDsiableds($array);
         return $this;
     }
 
 
     public function values($values)
     {
-        $this->options->setChecked($values);
+        $this->options->check($values);
         return $this;
     }
 
 
     public function value($value)
     {
-        if (is_null($value)) {
-            $this->options->resetChecked();
-        } else {
-            $this->options->setChecked([$value]);
+        if (!is_null($value)) {
+            $this->options->check([$value]);
         }
         return $this;
     }
