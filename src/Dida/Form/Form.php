@@ -46,16 +46,17 @@ class Form
      * @var array
      */
     protected $control_types = [
-        'hidden'     => 'Dida\\Form\\Hidden',
-        'text'       => 'Dida\\Form\\Text',
-        'password'   => 'Dida\\Form\\Password',
-        'statictext' => 'Dida\\Form\\StaticText',
-        'button'     => 'Dida\\Form\\Button',
-        'reset'      => 'Dida\\Form\\Reset',
-        'submit'     => 'Dida\\Form\\Submit',
-        'textarea'   => 'Dida\\Form\\TextArea',
-        'radiogroup' => 'Dida\\Form\\RadioGroup',
-        'select'     => 'Dida\\Form\\Select',
+        'hidden'        => 'Dida\\Form\\Hidden',
+        'text'          => 'Dida\\Form\\Text',
+        'password'      => 'Dida\\Form\\Password',
+        'statictext'    => 'Dida\\Form\\StaticText',
+        'button'        => 'Dida\\Form\\Button',
+        'reset'         => 'Dida\\Form\\Reset',
+        'submit'        => 'Dida\\Form\\Submit',
+        'textarea'      => 'Dida\\Form\\TextArea',
+        'radiogroup'    => 'Dida\\Form\\RadioGroup',
+        'select'        => 'Dida\\Form\\Select',
+        'checkboxgroup' => 'Dida\\Form\\CheckboxGroup',
     ];
 
     /**

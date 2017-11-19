@@ -40,7 +40,6 @@ class CheckboxGroup extends FormControl
 
         // opentag
         $props = $this->props->build();
-        $output[] = "<select{$props}>";
 
         // 处理 options
         $options = $this->options->getAll();
@@ -72,6 +71,7 @@ class CheckboxGroup extends FormControl
             } else {
                 $option_name = $name . '___' . $index;
             }
+            $option_name = " name=\"{$option_name}\"";
 
             $output[] = "<input type=\"checkbox\"{$option_name}{$value}{$checked}>{$caption}</option>";
         }

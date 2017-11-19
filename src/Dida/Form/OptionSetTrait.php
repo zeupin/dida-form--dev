@@ -63,17 +63,12 @@ trait OptionSetTrait
     }
 
 
-    public function values($values)
+    public function check($data)
     {
-        $this->options->check($values);
-        return $this;
-    }
-
-
-    public function value($value)
-    {
-        if (!is_null($value)) {
-            $this->options->check([$value]);
+        if (is_array($data)) {
+            $this->options->check($data);
+        } elseif (!is_null($data)) {
+            $this->options->check([$data]);
         }
         return $this;
     }

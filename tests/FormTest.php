@@ -177,7 +177,7 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD']);
+        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD']);
         $html = $form->build();
         echo Debug::varDump($html);
 
@@ -190,8 +190,8 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD']);
-        $control->optionValues(['cny', 'usd', null, 'aud']);
+        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD']);
+        $control->setValues(['cny', 'usd', null, 'aud']);
         $html = $form->build();
         echo Debug::varDump($html);
 
@@ -204,9 +204,9 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
-            ->optionValues(['cny', 'usd', null, 'aud'])
-            ->value('cny');
+        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->setValues(['cny', 'usd', null, 'aud'])
+            ->check('cny');
         $html = $form->build();
         echo Debug::varDump($html);
 
@@ -219,9 +219,9 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
-            ->optionValues(['cny', 'usd', null, 'aud'])
-            ->values(['cny', 'aud']);
+        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->setValues(['cny', 'usd', null, 'aud'])
+            ->check(['cny', 'aud']);
         $html = $form->build();
         echo Debug::varDump($html);
 
@@ -234,8 +234,8 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
-            ->values(['cny', 'aud']);
+        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->check(['cny', 'aud']);
         $html = $form->build();
         echo Debug::varDump($html);
 
@@ -248,12 +248,27 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->optionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
-            ->values(['USD', 'JPY']);
+        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->check(['USD', 'JPY']);
         $html = $form->build();
         echo Debug::varDump($html);
 
         $pos = mb_strpos($html, '<option>CNY</option><option selected>USD</option><option selected>JPY</option><option>AUD</option></select>');
+        $this->assertGreaterThan(0, $pos);
+    }
+
+
+    public function test_checkboxgroup_1()
+    {
+        $form = new Form();
+        $control = $form->add('checkboxgroup', 'currency');
+        $control->label("币种");
+        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->check(['USD', 'JPY']);
+        $html = $form->build();
+        echo Debug::varDump($html);
+
+        $pos = mb_strpos($html, '<input type="checkbox" name="currency___0">CNY</option><input type="checkbox" name="currency___1" checked>USD</option><input type="checkbox" name="currency___2" checked>JPY</option><input type="checkbox" name="currency___3">AUD</option>');
         $this->assertGreaterThan(0, $pos);
     }
 }
