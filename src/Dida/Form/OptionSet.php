@@ -17,17 +17,12 @@ class OptionSet
     /**
      * Version
      */
-    const VERSION = '20171117';
+    const VERSION = '20171119';
 
     /**
-     * options是一个二维表格数组
-     * [
-     *     index => [
-     *                  'value'   => ,
-     *                  'caption' => ,
-     *                  'checked  => ,
-     *              ]
-     * ]
+     * options数组。
+     *
+     * 是一个二维表格数组，[ index => option ]。
      * 通过setValues,setCaptions，必须严格匹配相应的index。
      *
      * @var array
@@ -35,19 +30,93 @@ class OptionSet
     protected $options = [];
 
     /**
-     * 行初始化。
+     * 新option的模板。
      *
-     * @var type
+     * @var array
      */
     protected $newoption = [
-        'caption' => null,
-        'value'   => null,
-        'checked' => false,
+        'caption'  => null,
+        'value'    => null,
+        'checked'  => false,
+        'disabled' => false,
     ];
 
 
     /**
-     * 返回当前的options
+     * 新增一个option。
+     *
+     * @param int|string $index
+     * @param string $caption
+     * @param mixed $value
+     * @param boolean $checked
+     * @param boolean $disabled
+     *
+     * @return $this
+     */
+    public function add($index, $caption = null, $value = null, $checked = false, $disabled = false)
+    {
+        $this->options[$indx] = [
+            'caption'  => $caption,
+            'value'    => $value,
+            'checked'  => $checked,
+            'disabled' => $disabled,
+        ];
+
+        return $this;
+    }
+
+
+    /**
+     * 获取指定index的option的指定键值。
+     *
+     * @param int|string $index
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function get($index, $key)
+    {
+        // option不存在，返回null
+        if (!array_key_exists($index, $this->options)) {
+            return null;
+        }
+
+        // option的键名不存在
+        if (array_key_exists($key, $this->options[$index])) {
+            return null;
+        }
+
+        // 返回option的键值
+        return $this->options[$index][$key];
+    }
+
+
+    /**
+     * 设置指定index的option的指定键值
+     *
+     * @param int|string $index
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return $this
+     */
+    public function set($index, $key, $value)
+    {
+        // option不存在，则创建
+        if (!array_key_exists($index, $this->options)) {
+            $this->options[$index] = $this->newoption;
+        }
+
+        // 设置值
+        $this->options[$index][$key] = $value;
+
+        // 完成
+        return $this;
+    }
+
+
+    /**
+     * 返回当前的options数组
      */
     public function getAll()
     {
@@ -56,15 +125,14 @@ class OptionSet
 
 
     /**
-     * @param array $values   一维数组，[ index => value ]
+     * 批量设置options的caption。
+     *
+     * @param array $captions   [ index => caption ]
      */
-    public function setValues(array $values)
+    public function setCaptions(array $array_by_index)
     {
-        foreach ($values as $index => $value) {
-            if (!isset($this->options[$index])) {
-                $this->options[$index] = $this->newoption;
-            }
-            $this->options[$index]['value'] = $value;
+        foreach ($array_by_index as $index => $value) {
+            $this->set($index, 'caption', $value);
         }
 
         return $this;
@@ -72,15 +140,44 @@ class OptionSet
 
 
     /**
-     * @param array $captions   一维数组，[ index => caption ]
+     * 批量设置options的value。
+     *
+     * @param array $array_by_index   [ index => value ]
      */
-    public function setCaptions(array $captions)
+    public function setValues(array $array_by_index)
     {
-        foreach ($captions as $index => $caption) {
-            if (!isset($this->options[$index])) {
-                $this->options[$index] = $this->newoption;
-            }
-            $this->options[$index]['caption'] = $caption;
+        foreach ($array_by_index as $index => $value) {
+            $this->set($index, 'value', $value);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * 批量设置options的默认checked。
+     *
+     * @param array $array_by_index   [ index => checked ]
+     */
+    public function setChecked(array $array_by_index)
+    {
+        foreach ($array_by_index as $index => $value) {
+            $this->set($index, 'checked', $value);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * 批量设置options的默认disabled。
+     *
+     * @param array $array_by_index   [ index => disabled ]
+     */
+    public function setDsiabled(array $array_by_index)
+    {
+        foreach ($array_by_index as $index => $value) {
+            $this->set($index, 'disabled', $value);
         }
 
         return $this;
@@ -90,20 +187,28 @@ class OptionSet
     /**
      * @param array $checked   一维数组，[ value ]
      */
-    public function setChecked(array $values)
+    public function check(array $values)
     {
-        foreach ($this->options as $index => $item) {
-            if (isset($item['value'])) {
-                $this->options[$index]['checked'] = (in_array($item['value'], $values));
+        foreach ($this->options as $index => $option) {
+            // 如果当前项是disabled，跳过
+            if ($this->get($index, 'disabled')) {
                 continue;
-            } elseif (isset($item['caption'])) {
-                $this->options[$index]['checked'] = (in_array($item['caption'], $values));
+            }
+
+            // 有value比较value，没有value比较caption，都没有则设置为false
+            if (isset($option['value'])) {
+                $this->options[$index]['checked'] = (in_array($option['value'], $values));
+                continue;
+            } elseif (isset($option['caption'])) {
+                $this->options[$index]['checked'] = (in_array($option['caption'], $values));
                 continue;
             } else {
                 $this->options[$index]['checked'] = false;
                 continue;
             }
         }
+
+        return $this;
     }
 
 
