@@ -19,69 +19,11 @@ class Select extends FormControl
      */
     const VERSION = '20171119';
 
+
     /**
-     * @var \Dida\Form\OptionSet
+     * 选项集
      */
-    protected $options = null;
-
-
-    public function __construct($name = null, $id = null)
-    {
-        parent::__construct($name, $id);
-
-        $this->options = new OptionSet;
-    }
-
-
-    public function addOption($caption = null, $value = null, $checked = false, $disabled = false)
-    {
-        $this->options->add(null, $caption, $value, $checked, $disabled);
-        return $this;
-    }
-
-
-    public function setCaptions($array)
-    {
-        $this->options->setCaptions($array);
-        return $this;
-    }
-
-
-    public function setValues($array)
-    {
-        $this->options->setValues($array);
-        return $this;
-    }
-
-
-    public function setCheckeds($array)
-    {
-        $this->options->setCheckeds($array);
-        return $this;
-    }
-
-
-    public function setDsiableds($array)
-    {
-        $this->options->setDsiableds($array);
-        return $this;
-    }
-
-
-    public function values($values)
-    {
-        $this->options->check($values);
-        return $this;
-    }
-
-
-    public function value($value)
-    {
-        if (!is_null($value)) {
-            $this->options->check([$value]);
-        }
-        return $this;
-    }
+    use OptionSetTrait;
 
 
     public function build()
