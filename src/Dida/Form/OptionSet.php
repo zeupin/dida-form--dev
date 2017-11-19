@@ -53,14 +53,20 @@ class OptionSet
      *
      * @return $this
      */
-    public function add($index, $caption = null, $value = null, $checked = false, $disabled = false)
+    public function add($index = null, $caption = null, $value = null, $checked = false, $disabled = false)
     {
-        $this->options[$indx] = [
+        $option = [
             'caption'  => $caption,
             'value'    => $value,
             'checked'  => $checked,
             'disabled' => $disabled,
         ];
+
+        if (is_null($index)) {
+            $this->options[] = $option;
+        } else {
+            $this->options[$index] = $option;
+        }
 
         return $this;
     }
@@ -127,11 +133,11 @@ class OptionSet
     /**
      * 批量设置options的caption。
      *
-     * @param array $captions   [ index => caption ]
+     * @param array $array   [ index => caption ]
      */
-    public function setCaptions(array $array_by_index)
+    public function setCaptions(array $array)
     {
-        foreach ($array_by_index as $index => $value) {
+        foreach ($array as $index => $value) {
             $this->set($index, 'caption', $value);
         }
 
@@ -142,11 +148,11 @@ class OptionSet
     /**
      * 批量设置options的value。
      *
-     * @param array $array_by_index   [ index => value ]
+     * @param array $array   [ index => value ]
      */
-    public function setValues(array $array_by_index)
+    public function setValues(array $array)
     {
-        foreach ($array_by_index as $index => $value) {
+        foreach ($array as $index => $value) {
             $this->set($index, 'value', $value);
         }
 
@@ -157,11 +163,11 @@ class OptionSet
     /**
      * 批量设置options的默认checked。
      *
-     * @param array $array_by_index   [ index => checked ]
+     * @param array $array   [ index => checked ]
      */
-    public function setChecked(array $array_by_index)
+    public function setCheckeds(array $array)
     {
-        foreach ($array_by_index as $index => $value) {
+        foreach ($array as $index => $value) {
             $this->set($index, 'checked', $value);
         }
 
@@ -172,11 +178,11 @@ class OptionSet
     /**
      * 批量设置options的默认disabled。
      *
-     * @param array $array_by_index   [ index => disabled ]
+     * @param array $array   [ index => disabled ]
      */
-    public function setDsiabled(array $array_by_index)
+    public function setDsiableds(array $array)
     {
-        foreach ($array_by_index as $index => $value) {
+        foreach ($array as $index => $value) {
             $this->set($index, 'disabled', $value);
         }
 
@@ -209,16 +215,5 @@ class OptionSet
         }
 
         return $this;
-    }
-
-
-    /**
-     * 重置checked。
-     */
-    public function resetChecked()
-    {
-        foreach ($this->options as $index => $item) {
-            $this->options[$index]['checked'] = false;
-        }
     }
 }
