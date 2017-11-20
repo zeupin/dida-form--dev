@@ -35,6 +35,9 @@ abstract class Control extends \Dida\Form\HtmlElement
     protected $messageZone = null;
 
 
+    /**
+     * @var \Dida\Form\HtmlElement
+     */
     public function &refCaptionZone()
     {
         if (!$this->captionZone) {
@@ -44,6 +47,9 @@ abstract class Control extends \Dida\Form\HtmlElement
     }
 
 
+    /**
+     * @var \Dida\Form\HtmlElement
+     */
     public function &refInputZone()
     {
         if (!$this->inputZone) {
@@ -53,6 +59,9 @@ abstract class Control extends \Dida\Form\HtmlElement
     }
 
 
+    /**
+     * @var \Dida\Form\HtmlElement
+     */
     public function &refHelpZone()
     {
         if (!$this->helpZone) {
@@ -62,6 +71,9 @@ abstract class Control extends \Dida\Form\HtmlElement
     }
 
 
+    /**
+     * @var \Dida\Form\HtmlElement
+     */
     public function &refMessageZone()
     {
         if (!$this->messageZone) {
