@@ -34,7 +34,7 @@ class Text extends Control
             return $this;
         }
 
-        $this->prepareCaptionZone()->setTag('label')
+        $this->refCaptionZone()->setTag('label')
             ->setInnerHTML(htmlspecialchars($caption));
         return $this;
     }
@@ -42,9 +42,9 @@ class Text extends Control
 
     public function setName($name)
     {
-        $this->prepareInputZone()->setTag('input', true, 'type="text"')
+        $this->refInputZone()->setTag('input', true, 'type="text"')
             ->setName($name);
-        $this->prepareCaptionZone()->setTag('label')
+        $this->refCaptionZone()->setTag('label')
             ->setProp('for', $name);
 
         return $this;
@@ -53,7 +53,7 @@ class Text extends Control
 
     public function setValue($value)
     {
-        $this->prepareInputZone()->setTag('input', true, 'type="text"')
+        $this->refInputZone()->setTag('input', true, 'type="text"')
             ->setProp('value', htmlspecialchars($value));
         return $this;
     }

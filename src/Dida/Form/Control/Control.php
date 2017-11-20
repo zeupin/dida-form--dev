@@ -35,7 +35,7 @@ abstract class Control extends \Dida\Form\HtmlElement
     protected $messageZone = null;
 
 
-    public function &prepareCaptionZone()
+    public function &refCaptionZone()
     {
         if (!$this->captionZone) {
             $this->captionZone = new \Dida\Form\HtmlElement();
@@ -44,7 +44,7 @@ abstract class Control extends \Dida\Form\HtmlElement
     }
 
 
-    public function &prepareInputZone()
+    public function &refInputZone()
     {
         if (!$this->inputZone) {
             $this->inputZone = new \Dida\Form\HtmlElement();
@@ -53,7 +53,7 @@ abstract class Control extends \Dida\Form\HtmlElement
     }
 
 
-    public function &prepareHelpZone()
+    public function &refHelpZone()
     {
         if (!$this->helpZone) {
             $this->helpZone = new \Dida\Form\HtmlElement();
@@ -62,47 +62,11 @@ abstract class Control extends \Dida\Form\HtmlElement
     }
 
 
-    public function &prepareMessageZone()
+    public function &refMessageZone()
     {
         if (!$this->messageZone) {
             $this->messageZone = new \Dida\Form\HtmlElement();
         }
-        return $this->messageZone;
-    }
-
-
-    /**
-     * @var \Dida\Form\HtmlElement
-     */
-    public function &refCaption()
-    {
-        return $this->captionZone;
-    }
-
-
-    /**
-     * @var \Dida\Form\HtmlElement
-     */
-    public function &refInput()
-    {
-        return $this->inputZone;
-    }
-
-
-    /**
-     * @var \Dida\Form\HtmlElement
-     */
-    public function &refHelp()
-    {
-        return $this->helpZone;
-    }
-
-
-    /**
-     * @var \Dida\Form\HtmlElement
-     */
-    public function &refMessage()
-    {
         return $this->messageZone;
     }
 

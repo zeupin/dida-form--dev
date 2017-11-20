@@ -84,7 +84,7 @@ class HtmlElement
     /**
      * @var \Dida\Form\HtmlElement
      */
-    protected $child = null;
+    protected $wrapper = null;
 
 
     /**
@@ -98,12 +98,13 @@ class HtmlElement
     {
         $this->tag = $tag;
         if ($this->tag) {
-            $this->opentag = $this->tag;
+            $more = trim($more);
+            $this->opentag = ($more) ? $this->tag . " $more" : $this->tag;
+        } else {
+            $this->opentag = '';
         }
         $this->autoclose = $autoclose;
-        if ($more) {
-            $this->opentag .= $more;
-        }
+        return $this;
     }
 
 
@@ -284,13 +285,6 @@ class HtmlElement
     }
 
 
-    public function setChild(&$child)
-    {
-        $this->child = $child;
-        return $this;
-    }
-
-
     /**
      * 在本元素的外面包一个元素。
      *
@@ -298,11 +292,11 @@ class HtmlElement
      *
      * @return \Dida\Form\HtmlElement
      */
-    public function wrap($tag)
+    public function &wrap($tag = 'div')
     {
-        $wrapper = new HtmlElement($tag);
-        $wrapper->setChild($this);
-        return $wrapper;
+        $this->wrapper = new HtmlElement();
+        $this->wrapper->setTag($tag);
+        return $this->wrapper;
     }
 
 
@@ -337,12 +331,8 @@ class HtmlElement
     }
 
 
-    public function build()
+    protected function buildSelf()
     {
-        if (!is_null($this->child)) {
-            $this->innerHTML = $this->child->build();
-        }
-
         // 如果没有设置tag，只要返回innerHTML即可。
         if (!$this->tag) {
             return $this->innerHTML;
@@ -355,5 +345,17 @@ class HtmlElement
 
         // 如果是普通元素
         return "<" . $this->opentag . $this->buildProps() . '>' . $this->innerHTML . "</{$this->tag}>";
+    }
+
+
+    public function build()
+    {
+        if (is_null($this->wrapper)) {
+            return $this->buildSelf();
+        } else {
+            $outerHTML = $this->buildSelf();
+            $this->wrapper->innerHTML = $outerHTML;
+            return $this->wrapper->build();
+        }
     }
 }
