@@ -39,6 +39,21 @@ class HtmlElement
     /**
      * @var string
      */
+    protected $tag = '';
+
+    /**
+     * @var boolean
+     */
+    protected $autoclose = false;
+
+    /**
+     * @var string
+     */
+    protected $opentag = '';
+
+    /**
+     * @var string
+     */
     protected $id = null;
 
     /**
@@ -65,6 +80,31 @@ class HtmlElement
      * @var string
      */
     protected $innerHTML = '';
+
+    /**
+     * @var \Dida\Form\HtmlElement
+     */
+    protected $child = null;
+
+
+    /**
+     * 初始化。
+     *
+     * @param string $tag   标签。
+     * @param boolean $autoclose   是否是自闭合。
+     * @param string $more   自定义的属性。
+     */
+    public function setTag($tag = null, $autoclose = false, $more = null)
+    {
+        $this->tag = $tag;
+        if ($this->tag) {
+            $this->opentag = $this->tag;
+        }
+        $this->autoclose = $autoclose;
+        if ($more) {
+            $this->opentag .= $more;
+        }
+    }
 
 
     public function setID($id)
@@ -237,27 +277,56 @@ class HtmlElement
     }
 
 
+    public function setInnerHTML($html)
+    {
+        $this->innerHTML = $html;
+        return $this;
+    }
+
+
+    public function setChild(&$child)
+    {
+        $this->child = $child;
+        return $this;
+    }
+
+
+    /**
+     * 在本元素的外面包一个元素。
+     *
+     * @param string $tag
+     *
+     * @return \Dida\Form\HtmlElement
+     */
+    public function wrap($tag)
+    {
+        $wrapper = new HtmlElement($tag);
+        $wrapper->setChild($this);
+        return $wrapper;
+    }
+
+
     /**
      * 构建元素的属性表达式
      */
-    public function buildProps()
+    protected function buildProps()
     {
         $output = [];
 
         if ($this->id) {
-            $output[] = ' id="' . $this->id . '"';
+            $output[] = ' id="' . htmlspecialchars($this->id) . '"';
         }
         if ($this->name) {
-            $output[] = ' name="' . $this->name . '"';
+            $output[] = ' name="' . htmlspecialchars($this->name) . '"';
         }
         if ($this->class) {
-            $output[] = ' class="' . $this->class . '"';
+            $output[] = ' class="' . htmlspecialchars($this->class) . '"';
         }
         foreach ($this->props as $name => $value) {
             if (array_key_exists($name, $this->bool_prop_list)) {
-                $output[] = " $name";
+                $output[] = ' ' . htmlspecialchars($name);
             } else {
-                $output[] = " $name=\"$value\"";
+                $output[] = ' ' . htmlspecialchars($name) . '="' . htmlspecialchars($value) . '"';
             }
         }
         if ($this->style) {
@@ -265,5 +334,26 @@ class HtmlElement
         }
 
         return implode('', $output);
+    }
+
+
+    public function build()
+    {
+        if (!is_null($this->child)) {
+            $this->innerHTML = $this->child->build();
+        }
+
+        // 如果没有设置tag，只要返回innerHTML即可。
+        if (!$this->tag) {
+            return $this->innerHTML;
+        }
+
+        // 如果是自闭合元素
+        if ($this->autoclose) {
+            return "<" . $this->opentag . $this->buildProps() . '/>';
+        }
+
+        // 如果是普通元素
+        return "<" . $this->opentag . $this->buildProps() . '>' . $this->innerHTML . "</{$this->tag}>";
     }
 }
