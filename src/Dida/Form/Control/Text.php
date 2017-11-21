@@ -20,41 +20,40 @@ class Text extends Control
     const VERSION = '20171120';
 
 
-    public function __construct($caption = null, $name = null)
+    /**
+     * 提交前的共性处理
+     */
+    use beforeBuildCommonTrait;
+
+
+    protected function newCaptionZone()
     {
-        $this->setCaption($caption);
-        $this->setName($name);
+        $this->captionZone->setTag('label');
     }
 
 
-    public function setCaption($caption)
+    protected function newInputZone()
     {
-        if ($caption === null) {
-            $this->captionZone = null;
-            return $this;
+        $this->inputZone->setTag('input', 'type="text"');
+    }
+
+
+    protected function beforeBuild()
+    {
+        if (isset($this->data)) {
+            $value = $this->data;
+            $this->refInputZone()->setProp('value', htmlspecialchars($value));
         }
-
-        $this->refCaptionZone()->setTag('label')
-            ->setInnerHTML(htmlspecialchars($caption));
-        return $this;
     }
 
 
-    public function setName($name)
+    public function build()
     {
-        $this->refInputZone()->setTag('input', true, 'type="text"')
-            ->setName($name);
-        $this->refCaptionZone()->setTag('label')
-            ->setProp('for', $name);
+        // build前的处理
+        $this->beforeBuildCommon();
+        $this->beforeBuild();
 
-        return $this;
-    }
-
-
-    public function setValue($value)
-    {
-        $this->refInputZone()->setTag('input', true, 'type="text"')
-            ->setProp('value', htmlspecialchars($value));
-        return $this;
+        // 开始build
+        return parent::build();
     }
 }
