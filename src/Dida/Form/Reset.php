@@ -7,12 +7,12 @@
  * Redistributions of files MUST retain the above copyright notice.
  */
 
-namespace Dida\Form\Control;
+namespace Dida\Form;
 
 /**
- * File
+ * Reset
  */
-class File extends Control
+class Reset extends Control
 {
     /**
      * Version
@@ -28,27 +28,20 @@ class File extends Control
 
     protected function newCaptionZone()
     {
-        $this->captionZone->setTag('label');
+        // do nothing
     }
 
 
     protected function newInputZone()
     {
-        $this->inputZone->setTag('input', 'type="file"');
-    }
-
-
-    protected function beforeBuild()
-    {
-        // do nothing
+        $this->inputZone->setTag('button', 'type="reset"');
     }
 
 
     public function build()
     {
         // build前的处理
-        $this->beforeBuildText();
-        $this->beforeBuild();
+        $this->beforeBuildButton();
 
         // 开始build
         return parent::build();

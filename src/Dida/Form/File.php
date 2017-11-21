@@ -7,12 +7,12 @@
  * Redistributions of files MUST retain the above copyright notice.
  */
 
-namespace Dida\Form\Control;
+namespace Dida\Form;
 
 /**
- * Password
+ * File
  */
-class Password extends Control
+class File extends Control
 {
     /**
      * Version
@@ -34,16 +34,13 @@ class Password extends Control
 
     protected function newInputZone()
     {
-        $this->inputZone->setTag('input', 'type="password"');
+        $this->inputZone->setTag('input', 'type="file"');
     }
 
 
     protected function beforeBuild()
     {
-        if (isset($this->data)) {
-            $value = $this->data;
-            $this->refInputZone()->setProp('value', htmlspecialchars($value));
-        }
+        // do nothing
     }
 
 

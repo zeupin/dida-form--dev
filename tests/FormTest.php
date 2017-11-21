@@ -108,16 +108,14 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('radiogroup', 'gender')
-            ->setCaption("性别")
-            ->setData(1)
-            ->options([
-            '男' => 1,
-            '女' => 0,
-        ]);
+            ->setCaption("Gender")
+            ->setOptionCaptions(['male', 'female'])
+            ->setOptionValues([1, 0])
+            ->setData(1);
         $html = $form->build();
         echo Debug::varDump($html);
 
-        $pos = mb_strpos($html, '<input type="radio" name="gender" value="1" checked>男<input type="radio" name="gender" value="0">女');
+        $pos = mb_strpos($html, '<label><input type="radio" name="gender" value="1" checked>male</label><label><input type="radio" name="gender" value="0">female</label>');
         $this->assertGreaterThan(0, $pos);
     }
 
@@ -126,30 +124,13 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('radiogroup', 'gender')
-            ->setCaption("性别")
-            ->options(['male', 'female',]);
+            ->setCaption("Gender")
+            ->setOptionCaptions(['male', 'female'])
+            ->setOptionValues([1, 0]);
         $html = $form->build();
         echo Debug::varDump($html);
 
-        $pos = mb_strpos($html, '<input type="radio" name="gender" value="male">male<input type="radio" name="gender" value="female">female');
-        $this->assertGreaterThan(0, $pos);
-    }
-
-
-    public function test_radiogroup_2()
-    {
-        $form = new Form();
-        $control = $form->add('radiogroup', 'gender')
-            ->setCaption("性别")
-            ->defaultValue(0)
-            ->options([
-            '男' => 1,
-            '女' => 0,
-        ]);
-        $html = $form->build();
-        echo Debug::varDump($html);
-
-        $pos = mb_strpos($html, '<input type="radio" name="gender" value="0" checked>');
+        $pos = mb_strpos($html, '<label><input type="radio" name="gender" value="1">male</label><label><input type="radio" name="gender" value="0">female</label>');
         $this->assertGreaterThan(0, $pos);
     }
 
@@ -164,7 +145,7 @@ class FormTest extends TestCase
         $html = $form->build();
         echo Debug::varDump($html);
 
-        $pos = mb_strpos($html, '<label>STATIC TEXT</label>some words');
+        $pos = mb_strpos($html, '<div>STATIC TEXT</div><div>some words</div>');
         $this->assertGreaterThan(0, $pos);
     }
 
@@ -173,7 +154,7 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD']);
+        $control->setOptionCaptions(['CNY', 'USD', 'JPY', 'AUD']);
         $html = $form->build();
         echo Debug::varDump($html);
 
@@ -186,8 +167,8 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD']);
-        $control->setValues(['cny', 'usd', null, 'aud']);
+        $control->setOptionCaptions(['CNY', 'USD', 'JPY', 'AUD']);
+        $control->setOptionValues(['cny', 'usd', null, 'aud']);
         $html = $form->build();
         echo Debug::varDump($html);
 
@@ -200,8 +181,8 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
-            ->setValues(['cny', 'usd', null, 'aud'])
+        $control->setOptionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->setOptionValues(['cny', 'usd', null, 'aud'])
             ->check('cny');
         $html = $form->build();
         echo Debug::varDump($html);
@@ -215,13 +196,17 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
-            ->setValues(['cny', 'usd', null, 'aud'])
+        $control->setOptionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+            ->setOptionValues(['cny', 'usd', null, 'aud'])
             ->check(['cny', 'aud']);
         $html = $form->build();
         echo Debug::varDump($html);
 
-        $pos = mb_strpos($html, '<option value="cny" selected>CNY</option><option value="usd">USD</option><option>JPY</option><option value="aud" selected>AUD</option>');
+        $pos = mb_strpos($html, ''
+            . '<option value="cny" selected>CNY</option>'
+            . '<option value="usd">USD</option>'
+            . '<option>JPY</option>'
+            . '<option value="aud" selected>AUD</option>');
         $this->assertGreaterThan(0, $pos);
     }
 
@@ -230,12 +215,16 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+        $control->setOptionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
             ->check(['cny', 'aud']);
         $html = $form->build();
         echo Debug::varDump($html);
 
-        $pos = mb_strpos($html, '<option>CNY</option><option>USD</option><option>JPY</option><option>AUD</option>');
+        $pos = mb_strpos($html, ''
+            . '<option>CNY</option>'
+            . '<option>USD</option>'
+            . '<option>JPY</option>'
+            . '<option>AUD</option>');
         $this->assertGreaterThan(0, $pos);
     }
 
@@ -244,12 +233,16 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('select', 'currency');
-        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+        $control->setOptionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
             ->check(['USD', 'JPY']);
         $html = $form->build();
         echo Debug::varDump($html);
 
-        $pos = mb_strpos($html, '<option>CNY</option><option selected>USD</option><option selected>JPY</option><option>AUD</option></select>');
+        $pos = mb_strpos($html, ''
+            . '<option>CNY</option>'
+            . '<option selected>USD</option>'
+            . '<option selected>JPY</option>'
+            . '<option>AUD</option>');
         $this->assertGreaterThan(0, $pos);
     }
 
@@ -258,13 +251,17 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('checkboxgroup', 'currency');
-        $control->setCaption("币种");
-        $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
+        $control->setCaption("Currency");
+        $control->setOptionCaptions(['CNY', 'USD', 'JPY', 'AUD'])
             ->check(['USD', 'JPY']);
         $html = $form->build();
         echo Debug::varDump($html);
 
-        $pos = mb_strpos($html, '<input type="checkbox" name="currency___0">CNY</option><input type="checkbox" name="currency___1" checked>USD</option><input type="checkbox" name="currency___2" checked>JPY</option><input type="checkbox" name="currency___3">AUD</option>');
+        $pos = mb_strpos($html, ''
+            . '<label><input type="checkbox" name="currency___0">CNY</label>'
+            . '<label><input type="checkbox" name="currency___1" checked>USD</label>'
+            . '<label><input type="checkbox" name="currency___2" checked>JPY</label>'
+            . '<label><input type="checkbox" name="currency___3">AUD</label>');
         $this->assertGreaterThan(0, $pos);
     }
 }

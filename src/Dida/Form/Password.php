@@ -7,12 +7,12 @@
  * Redistributions of files MUST retain the above copyright notice.
  */
 
-namespace Dida\Form\Control;
+namespace Dida\Form;
 
 /**
- * Submit
+ * Password
  */
-class Submit extends Control
+class Password extends Control
 {
     /**
      * Version
@@ -28,20 +28,30 @@ class Submit extends Control
 
     protected function newCaptionZone()
     {
-        // do nothing
+        $this->captionZone->setTag('label');
     }
 
 
     protected function newInputZone()
     {
-        $this->inputZone->setTag('button', 'type="submit"');
+        $this->inputZone->setTag('input', 'type="password"');
+    }
+
+
+    protected function beforeBuild()
+    {
+        if (isset($this->data)) {
+            $value = $this->data;
+            $this->refInputZone()->setProp('value', htmlspecialchars($value));
+        }
     }
 
 
     public function build()
     {
         // build前的处理
-        $this->beforeBuildButton();
+        $this->beforeBuildText();
+        $this->beforeBuild();
 
         // 开始build
         return parent::build();

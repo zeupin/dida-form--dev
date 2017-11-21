@@ -247,7 +247,7 @@ class HtmlElement
         }
 
         // 一般的属性，则设置属性值
-        $this->props[$name] = strval($value);
+        $this->props[$name] = $value;
 
         // 返回
         return $this;
@@ -402,33 +402,44 @@ class HtmlElement
      */
     protected function buildProps()
     {
-        $output = [];
+        // 关键属性
+        $final = [
+            'type'  => null,
+            'id'    => ($this->id) ? htmlspecialchars($this->id) : null,
+            'name'  => ($this->name) ? htmlspecialchars($this->name) : null,
+            'class' => ($this->class) ? htmlspecialchars($this->class) : null,
+        ];
 
-        // id
-        if ($this->id) {
-            $output[] = ' id="' . htmlspecialchars($this->id) . '"';
-        }
-
-        // name
-        if ($this->name) {
-            $output[] = ' name="' . htmlspecialchars($this->name) . '"';
-        }
-
-        // class
-        if ($this->class) {
-            $output[] = ' class="' . htmlspecialchars($this->class) . '"';
-        }
-
-        // properties
+        // 普通属性
+        $props = [];
         foreach ($this->props as $name => $value) {
             if (array_key_exists($name, $this->bool_prop_list)) {
-                $output[] = ' ' . htmlspecialchars($name);
+                if ($value) {
+                    $props[$name] = true;
+                }
             } else {
-                $output[] = ' ' . htmlspecialchars($name) . '="' . htmlspecialchars($value) . '"';
+                if (!is_null($value)) {
+                    $props[htmlspecialchars($name)] = htmlspecialchars($value);
+                }
             }
         }
 
-        // style
+        // 合并属性
+        $final = array_merge($final, $props);
+
+        // 属性
+        $output = [];
+        foreach ($final as $name => $value) {
+            if (!is_null($value)) {
+                if ($value === true) {
+                    $output[] = " $name";
+                } else {
+                    $output[] = " $name=\"$value\"";
+                }
+            }
+        }
+
+        // 最后加上样式
         if ($this->style) {
             $output[] = ' style="' . implode('', $this->style) . '"';
         }

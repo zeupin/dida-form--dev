@@ -12,26 +12,46 @@ namespace Dida\Form;
 /**
  * StaticText
  */
-class StaticText extends FormControl
+class StaticText extends Control
 {
     /**
      * Version
      */
-    const VERSION = '20171117';
+    const VERSION = '20171120';
+
+
+    protected function newCaptionZone()
+    {
+        $this->captionZone->setTag('div');
+    }
+
+
+    protected function newInputZone()
+    {
+        $this->inputZone->setTag('div');
+    }
+
+
+    protected function beforeBuild()
+    {
+        if (isset($this->bag['caption'])) {
+            $caption = $this->bag['caption'];
+            $this->refCaptionZone()->setInnerHTML($caption);
+        }
+
+        if (isset($this->data)) {
+            $value = $this->data;
+            $this->refInputZone()->setInnerHTML(htmlspecialchars($value));
+        }
+    }
+
 
     public function build()
     {
-        $output = [];
+        // build前的处理
+        $this->beforeBuild();
 
-        // 对label的处理
-        if ($this->caption) {
-            $output[] = "<label>{$this->caption}</label>";
-        }
-
-        // input:text
-        $output[] = $this->valueHtml;
-
-        // 返回
-        return implode('', $output);
+        // 开始build
+        return parent::build();
     }
 }

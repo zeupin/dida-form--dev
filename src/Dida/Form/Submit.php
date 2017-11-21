@@ -7,12 +7,12 @@
  * Redistributions of files MUST retain the above copyright notice.
  */
 
-namespace Dida\Form\Control;
+namespace Dida\Form;
 
 /**
- * Reset
+ * Submit
  */
-class Reset extends Control
+class Submit extends Control
 {
     /**
      * Version
@@ -34,7 +34,7 @@ class Reset extends Control
 
     protected function newInputZone()
     {
-        $this->inputZone->setTag('button', 'type="reset"');
+        $this->inputZone->setTag('button', 'type="submit"');
     }
 
 

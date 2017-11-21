@@ -47,24 +47,24 @@ class Form
      */
     protected $control_types = [
         /* input */
-        'text'       => 'Dida\\Form\\Control\\Text',
-        'password'   => 'Dida\\Form\\Control\\Password',
-        'hidden'     => 'Dida\\Form\\Control\\Hidden',
-        'file'       => 'Dida\\Form\\Control\\File',
-        'statictext' => 'Dida\\Form\\Control\\StaticText', //
+        'text'       => 'Dida\\Form\\Text',
+        'password'   => 'Dida\\Form\\Password',
+        'hidden'     => 'Dida\\Form\\Hidden',
+        'file'       => 'Dida\\Form\\File',
+        'statictext' => 'Dida\\Form\\StaticText', //
 
         /* button */
-        'button' => 'Dida\\Form\\Control\\Button',
-        'reset'  => 'Dida\\Form\\Control\\Reset',
-        'submit' => 'Dida\\Form\\Control\\Submit', //
+        'button' => 'Dida\\Form\\Button',
+        'reset'  => 'Dida\\Form\\Reset',
+        'submit' => 'Dida\\Form\\Submit', //
 
         /* textarea */
-        'textarea' => 'Dida\\Form\\Control\\TextArea', //
+        'textarea' => 'Dida\\Form\\TextArea', //
 
         /* group */
-        'select'        => 'Dida\\Form\\Control\\Select',
-        'radiogroup'    => 'Dida\\Form\\Control\\RadioGroup',
-        'checkboxgroup' => 'Dida\\Form\\Control\\CheckboxGroup', //
+        'select'        => 'Dida\\Form\\Select',
+        'radiogroup'    => 'Dida\\Form\\RadioGroup',
+        'checkboxgroup' => 'Dida\\Form\\CheckboxGroup', //
     ];
     protected $formElement = null;
 

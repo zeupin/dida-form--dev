@@ -23,7 +23,7 @@ class OptionSet
      * options数组。
      *
      * 是一个二维表格数组，[ index => option ]。
-     * 通过setValues,setCaptions，必须严格匹配相应的index。
+     * 通过setOptionValues,setOptionCaptions，必须严格匹配相应的index。
      *
      * @var array
      */
@@ -135,7 +135,7 @@ class OptionSet
      *
      * @param array $array   [ index => caption ]
      */
-    public function setCaptions(array $array)
+    public function setOptionCaptions(array $array)
     {
         foreach ($array as $index => $value) {
             $this->set($index, 'caption', $value);
@@ -150,7 +150,7 @@ class OptionSet
      *
      * @param array $array   [ index => value ]
      */
-    public function setValues(array $array)
+    public function setOptionValues(array $array)
     {
         foreach ($array as $index => $value) {
             $this->set($index, 'value', $value);
@@ -165,7 +165,7 @@ class OptionSet
      *
      * @param array $array   [ index => checked ]
      */
-    public function setCheckeds(array $array)
+    public function setOptionCheckeds(array $array)
     {
         foreach ($array as $index => $value) {
             $this->set($index, 'checked', $value);
@@ -180,7 +180,7 @@ class OptionSet
      *
      * @param array $array   [ index => disabled ]
      */
-    public function setDsiableds(array $array)
+    public function setOptionDisableds(array $array)
     {
         foreach ($array as $index => $value) {
             $this->set($index, 'disabled', $value);
@@ -191,7 +191,7 @@ class OptionSet
 
 
     /**
-     * @param array $checked   一维数组，[ value ]
+     * @param array $values   一维数组，[ value ]
      */
     public function check(array $values)
     {
@@ -201,7 +201,7 @@ class OptionSet
                 continue;
             }
 
-            // 有value比较value，没有value比较caption，都没有则设置为false
+            // 有value比较value，没有value比较caption，都没有则设置为null
             if (isset($option['value'])) {
                 $this->options[$index]['checked'] = (in_array($option['value'], $values));
                 continue;

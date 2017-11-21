@@ -35,30 +35,30 @@ trait OptionSetTrait
     }
 
 
-    public function setCaptions($array)
+    public function setOptionCaptions($array)
     {
-        $this->options->setCaptions($array);
+        $this->options->setOptionCaptions($array);
         return $this;
     }
 
 
-    public function setValues($array)
+    public function setOptionValues($array)
     {
-        $this->options->setValues($array);
+        $this->options->setOptionValues($array);
         return $this;
     }
 
 
-    public function setCheckeds($array)
+    public function setOptionCheckeds($array)
     {
-        $this->options->setCheckeds($array);
+        $this->options->setOptionCheckeds($array);
         return $this;
     }
 
 
-    public function setDsiableds($array)
+    public function setOptionDisableds($array)
     {
-        $this->options->setDsiableds($array);
+        $this->options->setOptionDisableds($array);
         return $this;
     }
 

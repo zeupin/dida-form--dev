@@ -7,7 +7,7 @@
  * Redistributions of files MUST retain the above copyright notice.
  */
 
-namespace Dida\Form\Control;
+namespace Dida\Form;
 
 /**
  * Button
