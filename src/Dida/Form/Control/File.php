@@ -10,9 +10,9 @@
 namespace Dida\Form\Control;
 
 /**
- * Password
+ * File
  */
-class Password extends Control
+class File extends Control
 {
     /**
      * Version
@@ -34,16 +34,13 @@ class Password extends Control
 
     protected function newInputZone()
     {
-        $this->inputZone->setTag('input', 'type="password"');
+        $this->inputZone->setTag('input', 'type="file"');
     }
 
 
     protected function beforeBuild()
     {
-        if (isset($this->data)) {
-            $value = $this->data;
-            $this->refInputZone()->setProp('value', htmlspecialchars($value));
-        }
+        // do nothing
     }
 
 

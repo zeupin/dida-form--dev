@@ -10,9 +10,9 @@
 namespace Dida\Form\Control;
 
 /**
- * Password
+ * TextArea
  */
-class Password extends Control
+class TextArea extends Control
 {
     /**
      * Version
@@ -34,15 +34,33 @@ class Password extends Control
 
     protected function newInputZone()
     {
-        $this->inputZone->setTag('input', 'type="password"');
+        $this->inputZone->setTag('textarea');
+    }
+
+
+    /**
+     * 设置rows和cols。
+     *
+     * @param int $rows
+     * @param int $cols
+     */
+    public function setRowsAndCols($rows = null, $cols = null)
+    {
+        $this->bag['rows'] = $rows;
+        $this->bag['cols'] = $cols;
+        return $this;
     }
 
 
     protected function beforeBuild()
     {
+        $rows = (isset($this->bag['rows'])) ? $this->bag['rows'] : 6;
+        $cols = (isset($this->bag['cols'])) ? $this->bag['cols'] : 40;
+        $this->refInputZone()->setProp('cols', $cols)->setProp('rows', $rows);
+
         if (isset($this->data)) {
             $value = $this->data;
-            $this->refInputZone()->setProp('value', htmlspecialchars($value));
+            $this->refInputZone()->setInnerHTML(htmlspecialchars($value));
         }
     }
 

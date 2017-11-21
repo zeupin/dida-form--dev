@@ -10,9 +10,9 @@
 namespace Dida\Form\Control;
 
 /**
- * Password
+ * Hidden
  */
-class Password extends Control
+class Hidden extends Control
 {
     /**
      * Version
@@ -20,26 +20,30 @@ class Password extends Control
     const VERSION = '20171120';
 
 
-    /**
-     * 提交前的共性处理
-     */
-    use beforeBuildCommonTrait;
-
-
     protected function newCaptionZone()
     {
-        $this->captionZone->setTag('label');
+        // do nothing
     }
 
 
     protected function newInputZone()
     {
-        $this->inputZone->setTag('input', 'type="password"');
+        $this->inputZone->setTag('input', 'type="hidden"');
     }
 
 
     protected function beforeBuild()
     {
+        if (isset($this->bag['name'])) {
+            $name = $this->bag['name'];
+            $this->refInputZone()->setName($name);
+        }
+
+        if (isset($this->bag['id'])) {
+            $id = $this->bag['id'];
+            $this->refInputZone()->setID($id);
+        }
+
         if (isset($this->data)) {
             $value = $this->data;
             $this->refInputZone()->setProp('value', htmlspecialchars($value));
@@ -50,7 +54,6 @@ class Password extends Control
     public function build()
     {
         // build前的处理
-        $this->beforeBuildCommon();
         $this->beforeBuild();
 
         // 开始build
