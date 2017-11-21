@@ -10,9 +10,9 @@
 namespace Dida\Form\Control;
 
 /**
- * Password
+ * Submit
  */
-class Password extends Control
+class Submit extends Control
 {
     /**
      * Version
@@ -28,30 +28,20 @@ class Password extends Control
 
     protected function newCaptionZone()
     {
-        $this->captionZone->setTag('label');
+        // do nothing
     }
 
 
     protected function newInputZone()
     {
-        $this->inputZone->setTag('input', 'type="password"');
-    }
-
-
-    protected function beforeBuild()
-    {
-        if (isset($this->data)) {
-            $value = $this->data;
-            $this->refInputZone()->setProp('value', htmlspecialchars($value));
-        }
+        $this->inputZone->setTag('button', 'type="submit"');
     }
 
 
     public function build()
     {
         // build前的处理
-        $this->beforeBuildText();
-        $this->beforeBuild();
+        $this->beforeBuildButton();
 
         // 开始build
         return parent::build();

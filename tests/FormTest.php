@@ -26,11 +26,8 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $form->setMethod('delete')
-            ->add('hidden', 'time', time())
-            ->setProp('id', 'abcd')
-            ->setProp('style', '1111')
-            ->done()
-            ->add('hidden', 'token', uniqid());
+            ->add('hidden', 'time', time(), "SHI JIAN", 'id' . uniqid())->done()
+            ->add('hidden', null, 'token', uniqid());
         $html = $form->build();
         echo Debug::varDump($html);
     }
@@ -39,10 +36,7 @@ class FormTest extends TestCase
     public function test_text()
     {
         $form = new Form();
-        $control = $form->add('text', 'name')
-            ->label("姓名")
-            ->value('your name')
-            ->required();
+        $control = $form->add('text', 'name', 'your name', 'XING MING', 'id' . uniqid());
 
         $html = $form->build();
         echo Debug::varDump($html);
@@ -52,9 +46,8 @@ class FormTest extends TestCase
     public function test_password()
     {
         $form = new Form();
-        $control = $form->add('password', 'pwd', '')
-            ->label("密码")
-            ->value('your password')
+        $control = $form->add('password', 'pwd', '', 'MIMA', 'pwd')
+            ->setData('your password')
             ->required();
 
         $html = $form->build();
@@ -65,10 +58,9 @@ class FormTest extends TestCase
     public function test_textarea()
     {
         $form = new Form();
-        $control = $form->add('textarea', 'content', 'id_content')
-            ->label("介绍")
-            ->cols(40)->rows(5)
-            ->value("你的介绍")
+        $control = $form->add('textarea', 'content', null, 'TEXT AREA', 'id_content')
+            ->setRowsAndCols(5, 40)
+            ->setData("Your Text")
             ->required();
 
         $html = $form->build();
@@ -79,9 +71,9 @@ class FormTest extends TestCase
     public function test_button()
     {
         $form = new Form();
-        $control = $form->add('button', null, null)
-            ->label("介绍")
-            ->value("你的介绍");
+        $control = $form->add('button')
+            ->setCaption("your intro")
+            ->setData("your content");
 
         $html = $form->build();
         echo Debug::varDump($html);
@@ -91,7 +83,9 @@ class FormTest extends TestCase
     public function test_reset()
     {
         $form = new Form();
-        $control = $form->add('reset', null, null);
+        $control = $form->add('reset')
+            ->setCaption("your intro")
+            ->setData("your content");
 
         $html = $form->build();
         echo Debug::varDump($html);
@@ -101,7 +95,9 @@ class FormTest extends TestCase
     public function test_submit()
     {
         $form = new Form();
-        $control = $form->add('submit', null, null);
+        $control = $form->add('submit')
+            ->setCaption("your intro")
+            ->setData("your content");
 
         $html = $form->build();
         echo Debug::varDump($html);
@@ -112,8 +108,8 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('radiogroup', 'gender')
-            ->label("性别")
-            ->value(1)
+            ->setCaption("性别")
+            ->setData(1)
             ->options([
             '男' => 1,
             '女' => 0,
@@ -130,7 +126,7 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('radiogroup', 'gender')
-            ->label("性别")
+            ->setCaption("性别")
             ->options(['male', 'female',]);
         $html = $form->build();
         echo Debug::varDump($html);
@@ -144,7 +140,7 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('radiogroup', 'gender')
-            ->label("性别")
+            ->setCaption("性别")
             ->defaultValue(0)
             ->options([
             '男' => 1,
@@ -162,8 +158,8 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('statictext')
-            ->label("STATIC TEXT")
-            ->value('some words');
+            ->setCaption("STATIC TEXT")
+            ->setData('some words');
 
         $html = $form->build();
         echo Debug::varDump($html);
@@ -262,7 +258,7 @@ class FormTest extends TestCase
     {
         $form = new Form();
         $control = $form->add('checkboxgroup', 'currency');
-        $control->label("币种");
+        $control->setCaption("币种");
         $control->setCaptions(['CNY', 'USD', 'JPY', 'AUD'])
             ->check(['USD', 'JPY']);
         $html = $form->build();

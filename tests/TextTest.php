@@ -24,22 +24,32 @@ class TextTest extends TestCase
 
     public function test_1()
     {
-        $control = new \Dida\Form\Control\Text("TEST DEMO", 'demo');
+        $control = new \Dida\Form\Control\Text('demo');
         echo Debug::varDump($control->build());
     }
 
 
     public function test_2()
     {
-        $control = new \Dida\Form\Control\Text("", 'demo');
+        $control = new \Dida\Form\Control\Text('demo', '1234');
         echo Debug::varDump($control->build());
     }
 
 
     public function test_3()
     {
-        $control = new \Dida\Form\Control\Text("", 'demo');
-        $control->refCaptionZone()->wrap('div')->setClass('div1');
+        $control = new \Dida\Form\Control\Text('demo', '1234', 'DEMO CAPTION');
+        $control->refCaptionZone()
+            ->wrap('div')->setClass('div1')
+            ->wrap()->setClass('div2');
+        echo Debug::varDump($control->build());
+    }
+
+
+    public function test_4()
+    {
+        $control = new \Dida\Form\Control\Text('demo');
+        $control->setData('1234');
         echo Debug::varDump($control->build());
     }
 }

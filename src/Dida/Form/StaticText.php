@@ -24,8 +24,8 @@ class StaticText extends FormControl
         $output = [];
 
         // 对label的处理
-        if ($this->label) {
-            $output[] = "<label>{$this->label}</label>";
+        if ($this->caption) {
+            $output[] = "<label>{$this->caption}</label>";
         }
 
         // input:text

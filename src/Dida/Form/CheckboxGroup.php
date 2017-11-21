@@ -34,8 +34,8 @@ class CheckboxGroup extends FormControl
         $required = ($this->props->get('required')) ? ' *' : '';
 
         // 对label的处理
-        if ($this->label) {
-            $output[] = "<label>{$this->label}{$required}</label>";
+        if ($this->caption) {
+            $output[] = "<label>{$this->caption}{$required}</label>";
         }
 
         // opentag

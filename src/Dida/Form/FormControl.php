@@ -10,7 +10,13 @@
 namespace Dida\Form;
 
 /**
- * FormControl
+ * FormControl 表单控件类。
+ *
+ * 一个典型的表单控件包括四个部分：
+ * 1. 标题（Caption）        --控件的标题。
+ * 2. 用户输入区（Input）    --用户输入。
+ * 3. 帮助文本区（Help）     --显示一些帮助信息。
+ * 4. 消息区（Message）      --显示服务器返回的信息。
  */
 abstract class FormControl
 {
@@ -36,7 +42,7 @@ abstract class FormControl
     /**
      * @var string
      */
-    protected $label = null;
+    protected $caption = null;
 
     /**
      * @var string
@@ -94,9 +100,9 @@ abstract class FormControl
     }
 
 
-    public function addClass($class)
+    public function setClass($class)
     {
-        $this->props->addClass($class);
+        $this->props->setClass($class);
         return $this;
     }
 
@@ -108,9 +114,9 @@ abstract class FormControl
     }
 
 
-    public function addStyle($style)
+    public function setStyle($style)
     {
-        $this->props->addStyle($style);
+        $this->props->setStyle($style);
         return $this;
     }
 
@@ -136,13 +142,13 @@ abstract class FormControl
 
 
     /**
-     * 设置label。
+     * 设置caption。
      *
-     * @param string $label
+     * @param string $caption
      */
-    public function label($label)
+    public function setCaption($caption)
     {
-        $this->label = htmlspecialchars($label);
+        $this->caption = $caption;
         return $this;
     }
 
@@ -192,14 +198,5 @@ abstract class FormControl
             $this->props->remove('readonly');
         }
         return $this;
-    }
-
-
-    /**
-     * 控件设置完成，返回Form对象
-     */
-    public function done()
-    {
-        return $this->form;
     }
 }

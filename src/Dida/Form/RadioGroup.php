@@ -54,8 +54,8 @@ class RadioGroup extends FormControl
         $required = ($this->props->get('required')) ? ' *' : '';
 
         // 对label的处理
-        if ($this->label) {
-            $output[] = "<label{$for}>{$this->label}{$required}</label>";
+        if ($this->caption) {
+            $output[] = "<label{$for}>{$this->caption}{$required}</label>";
         }
 
         // 整合默认值

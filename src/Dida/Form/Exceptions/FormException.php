@@ -48,5 +48,4 @@ class FormException extends \Exception
      * 表单控件的属性值无效
      */
     const INVALID_PROPERTY_VALUE = 2002;
-
 }

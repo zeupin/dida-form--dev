@@ -47,30 +47,26 @@ class Form
      */
     protected $control_types = [
         /* input */
-        'text'       => 'Dida\\Form\\Text',
-        'password'   => 'Dida\\Form\\Password',
-        'hidden'     => 'Dida\\Form\\Hidden',
-        'file'       => 'Dida\\Form\\File',
-        'statictext' => 'Dida\\Form\\StaticText', //
+        'text'       => 'Dida\\Form\\Control\\Text',
+        'password'   => 'Dida\\Form\\Control\\Password',
+        'hidden'     => 'Dida\\Form\\Control\\Hidden',
+        'file'       => 'Dida\\Form\\Control\\File',
+        'statictext' => 'Dida\\Form\\Control\\StaticText', //
 
         /* button */
-        'button' => 'Dida\\Form\\Button',
-        'reset'  => 'Dida\\Form\\Reset',
-        'submit' => 'Dida\\Form\\Submit', //
+        'button' => 'Dida\\Form\\Control\\Button',
+        'reset'  => 'Dida\\Form\\Control\\Reset',
+        'submit' => 'Dida\\Form\\Control\\Submit', //
 
         /* textarea */
-        'textarea' => 'Dida\\Form\\TextArea', //
+        'textarea' => 'Dida\\Form\\Control\\TextArea', //
 
         /* group */
-        'select'        => 'Dida\\Form\\Select',
-        'radiogroup'    => 'Dida\\Form\\RadioGroup',
-        'checkboxgroup' => 'Dida\\Form\\CheckboxGroup', //
+        'select'        => 'Dida\\Form\\Control\\Select',
+        'radiogroup'    => 'Dida\\Form\\Control\\RadioGroup',
+        'checkboxgroup' => 'Dida\\Form\\Control\\CheckboxGroup', //
     ];
-
-    /**
-     * 属性集
-     */
-    protected $props = null;
+    protected $formElement = null;
 
 
     /**
@@ -81,46 +77,10 @@ class Form
      */
     public function __construct($action = null, $method = 'get', $name = null, $id = null)
     {
-        // 常规属性
-        $this->props = new PropertySet([
-            'id'     => $id,
-            'name'   => $name,
-            'method' => 'get',
-            'action' => $action,
-        ]);
+        $this->formElement = new HtmlElement('form');
 
         // method要特别处理一下
         $this->setMethod($method);
-    }
-
-
-    /**
-     * 构建表单的HTML。
-     *
-     * @return string
-     */
-    public function build()
-    {
-        $output = [];
-
-        // 构建opentag
-        $output[] = '<form';
-
-        // 构建属性
-        $output[] = $this->props->build();
-
-        $output[] = '>';
-
-        // 构建表单控件
-        foreach ($this->controls as $control) {
-            $output[] = $control->build();
-        }
-
-        // 构建closetag
-        $output[] = '</form>';
-
-        // 输出
-        return implode('', $output);
     }
 
 
@@ -138,7 +98,7 @@ class Form
             case 'get':
             case 'post':
                 $this->method = $method;
-                $this->props->set('method', $method);
+                $this->formElement->setProp('method', $method);
                 unset($this->controls[self::REQUEST_METHOD]);
                 break;
 
@@ -149,9 +109,9 @@ class Form
             case 'options':
                 $this->method = $method;
                 // method属性设置为post
-                $this->props->set('method', 'post');
+                $this->formElement->setProp('method', 'post');
                 // 实际的method存到一个input:hidden里面
-                $this->add('hidden', self::REQUEST_METHOD, $method, null, self::REQUEST_METHOD);
+                $this->add('hidden', self::REQUEST_METHOD, $method, null, null, self::REQUEST_METHOD);
                 break;
 
             default:
@@ -173,16 +133,9 @@ class Form
     }
 
 
-    public function setProp($name, $value)
+    public function &refFormElement()
     {
-        $this->props->set($name, $value);
-        return $this;
-    }
-
-
-    public function getProp($name)
-    {
-        return $this->props->get($name);
+        return $this->formElement;
     }
 
 
@@ -206,14 +159,14 @@ class Form
      *
      * @param string $type
      * @param string $name
-     * @param string $value
+     * @param mixed $data
      * @param string $index
      *
      * @return \Dida\Form\FormControl  返回生成的表单控件，供进一步设置
      *
      * @throws FormException
      */
-    public function &add($type, $name = null, $value = null, $id = null, $index = null)
+    public function &add($type, $name = null, $data = null, $caption = null, $id = null, $index = null)
     {
         // 检查类型是否存在
         $type = strtolower($type);
@@ -222,10 +175,7 @@ class Form
         }
 
         // 生成控件
-        $control = new $this->control_types[$type]($name, $id);
-
-        // 设置值
-        $control->value($value);
+        $control = new $this->control_types[$type]($name, $data, $caption, $id);
 
         // 把控件的Form属性指向当前Form
         $control->setForm($this);
@@ -239,5 +189,25 @@ class Form
 
         // 返回control的引用
         return $control;
+    }
+
+
+    /**
+     * 构建表单的HTML。
+     *
+     * @return string
+     */
+    public function build()
+    {
+        // 构建表单控件
+        $output = [];
+        foreach ($this->controls as $control) {
+            $output[] = $control->build();
+        }
+        $html = implode('', $output);
+        $this->formElement->setInnerHTML($html);
+
+        // 输出
+        return $this->formElement->build();
     }
 }

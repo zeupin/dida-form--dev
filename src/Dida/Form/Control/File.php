@@ -23,7 +23,7 @@ class File extends Control
     /**
      * 提交前的共性处理
      */
-    use beforeBuildCommonTrait;
+    use beforeBuildTrait;
 
 
     protected function newCaptionZone()
@@ -47,7 +47,7 @@ class File extends Control
     public function build()
     {
         // build前的处理
-        $this->beforeBuildCommon();
+        $this->beforeBuildText();
         $this->beforeBuild();
 
         // 开始build
