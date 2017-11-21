@@ -37,6 +37,15 @@ class HtmlElement
     ];
 
     /**
+     * 自动闭合元素表。
+     *
+     * @var array
+     */
+    protected $autoclose_element_list = [
+        'input' => null,
+    ];
+
+    /**
      * @var string
      */
     protected $tag = '';
@@ -82,9 +91,36 @@ class HtmlElement
     protected $innerHTML = '';
 
     /**
+     * 父节点
      * @var \Dida\Form\HtmlElement
      */
     protected $wrapper = null;
+
+    /**
+     * 兄节点
+     * @var \Dida\Form\HtmlElement
+     */
+    protected $before = null;
+
+    /**
+     * 弟节点
+     * @var \Dida\Form\HtmlElement
+     */
+    protected $after = null;
+
+    /**
+     * 子节点
+     * @var array
+     */
+    protected $children = [];
+
+
+    public function __construct($tag = null, $more = null)
+    {
+        if (!is_null($tag)) {
+            $this->setTag($tag, $more);
+        }
+    }
 
 
     /**
@@ -94,16 +130,16 @@ class HtmlElement
      * @param boolean $autoclose   是否是自闭合。
      * @param string $more   自定义的属性。
      */
-    public function setTag($tag = null, $autoclose = false, $more = null)
+    public function setTag($tag = null, $more = null)
     {
         $this->tag = $tag;
         if ($this->tag) {
-            $more = trim($more);
-            $this->opentag = ($more) ? $this->tag . " $more" : $this->tag;
+            $this->opentag = ($more) ? $this->tag . ' ' . trim($more) : $this->tag;
         } else {
             $this->opentag = '';
         }
-        $this->autoclose = $autoclose;
+
+        $this->autoclose = array_key_exists($tag, $this->autoclose_element_list);
         return $this;
     }
 
@@ -278,10 +314,30 @@ class HtmlElement
     }
 
 
+    /**
+     * 设置当前元素的innerHTML。
+     *
+     * 注意：依照对innerHTML的定义，执行本方法后，children会被重置为空数组。
+     *
+     * @param string $html
+     * @return $this
+     */
     public function setInnerHTML($html)
     {
         $this->innerHTML = $html;
+        $this->children = [];
         return $this;
+    }
+
+
+    /**
+     * 获取当前元素的innerHTML。
+     *
+     * @return string
+     */
+    public function getInnerHTML()
+    {
+        return $this->innerHTML . $this->buildChildren();
     }
 
 
@@ -294,9 +350,50 @@ class HtmlElement
      */
     public function &wrap($tag = 'div')
     {
-        $this->wrapper = new HtmlElement();
-        $this->wrapper->setTag($tag);
+        $this->wrapper = new HtmlElement($tag);
         return $this->wrapper;
+    }
+
+
+    /**
+     * 在本元素的前面插一个元素。
+     *
+     * @param string $tag
+     *
+     * @return \Dida\Form\HtmlElement
+     */
+    public function &insertBefore($tag = null)
+    {
+        $this->before = new HtmlElement($tag);
+        return $this->before;
+    }
+
+
+    /**
+     * 在本元素的后面插一个元素。
+     *
+     * @param string $tag
+     *
+     * @return \Dida\Form\HtmlElement
+     */
+    public function &insertAfter($tag = null)
+    {
+        $this->after = new HtmlElement($tag);
+        return $this->after;
+    }
+
+
+    /**
+     * 新增一个子节点。
+     *
+     * @param  $tag
+     * @return \Dida\Form\HtmlElement
+     */
+    public function &addChild($tag = null)
+    {
+        $element = new HtmlElement($tag);
+        $this->children[] = &$element;
+        return $element;
     }
 
 
@@ -307,15 +404,22 @@ class HtmlElement
     {
         $output = [];
 
+        // id
         if ($this->id) {
             $output[] = ' id="' . htmlspecialchars($this->id) . '"';
         }
+
+        // name
         if ($this->name) {
             $output[] = ' name="' . htmlspecialchars($this->name) . '"';
         }
+
+        // class
         if ($this->class) {
             $output[] = ' class="' . htmlspecialchars($this->class) . '"';
         }
+
+        // properties
         foreach ($this->props as $name => $value) {
             if (array_key_exists($name, $this->bool_prop_list)) {
                 $output[] = ' ' . htmlspecialchars($name);
@@ -323,10 +427,33 @@ class HtmlElement
                 $output[] = ' ' . htmlspecialchars($name) . '="' . htmlspecialchars($value) . '"';
             }
         }
+
+        // style
         if ($this->style) {
             $output[] = ' style="' . implode('', $this->style) . '"';
         }
 
+        // result
+        return implode('', $output);
+    }
+
+
+    protected function buildChildren()
+    {
+        /**
+         * 如果没有子节点
+         */
+        if (empty($this->children)) {
+            return '';
+        }
+
+        /**
+         * 合并子节点
+         */
+        $output = [];
+        foreach ($this->children as $element) {
+            $output[] = $element->build();
+        }
         return implode('', $output);
     }
 
@@ -335,26 +462,41 @@ class HtmlElement
     {
         // 如果没有设置tag，只要返回innerHTML即可。
         if (!$this->tag) {
-            return $this->innerHTML;
+            return $this->getInnerHTML();
         }
 
         // 如果是自闭合元素
         if ($this->autoclose) {
-            return "<" . $this->opentag . $this->buildProps() . '/>';
+            return "<" . $this->opentag . $this->buildProps() . '>';
         }
 
         // 如果是普通元素
-        return "<" . $this->opentag . $this->buildProps() . '>' . $this->innerHTML . "</{$this->tag}>";
+        return "<" . $this->opentag . $this->buildProps() . '>' . $this->getInnerHTML() . "</{$this->tag}>";
     }
 
 
     public function build()
     {
+        $output = [];
+
+        // before
+        if (!is_null($this->before)) {
+            $output[] = $this->before->build();
+        }
+        // self
+        $output[] = $this->buildSelf();
+        // after
+        if (!is_null($this->after)) {
+            $output[] = $this->after->build();
+        }
+        // implode
+        $result = implode('', $output);
+
+        // 是否有wrapper
         if (is_null($this->wrapper)) {
-            return $this->buildSelf();
+            return $result;
         } else {
-            $outerHTML = $this->buildSelf();
-            $this->wrapper->innerHTML = $outerHTML;
+            $this->wrapper->innerHTML = &$result;
             return $this->wrapper->build();
         }
     }
