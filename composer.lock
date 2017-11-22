@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "c03b372eaa0a9b21eac33ec5e959b5e0",
+    "packages": [
+        {
+            "name": "dida/html",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zeupin/dida-html.git",
+                "reference": "2683beabaf8eae845f2a87f4117b816314469caf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zeupin/dida-html/zipball/2683beabaf8eae845f2a87f4117b816314469caf",
+                "reference": "2683beabaf8eae845f2a87f4117b816314469caf",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4 || ^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dida\\": "src/Dida"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Macc Liu",
+                    "email": "maccliu@zeupin.com",
+                    "homepage": "https://github.com/maccliu"
+                }
+            ],
+            "description": "A HTML Component.",
+            "homepage": "https://github.com/zeupin/dida-html",
+            "time": "2017-11-22T15:50:16+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "dida/html": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": "^5.4 || ^7.0"
+    },
+    "platform-dev": []
+}
