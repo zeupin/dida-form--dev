@@ -81,7 +81,7 @@ class Form
                 // method属性设置为post
                 $this->formElement->setProp('method', 'post');
                 // 实际的method存到一个input:hidden里面
-                $this->add('hidden', self::REQUEST_METHOD, $method, null, null, self::REQUEST_METHOD);
+                $this->addHidden(null, self::REQUEST_METHOD, $method, null, self::REQUEST_METHOD);
                 break;
 
             default:
@@ -107,9 +107,6 @@ class Form
     {
         return $this->formElement;
     }
-
-
-
 
 
     /**
