@@ -2,8 +2,4 @@
 /.php_cs.cache
 /phpcodeclean.php
 /vendor/
-<<<<<<< HEAD
 /composer.lock
-=======
-composer.lock
->>>>>>> aa4858331e7a245fc6337a2dc9d3c3a105e2f911
