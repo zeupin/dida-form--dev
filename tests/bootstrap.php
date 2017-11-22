@@ -9,6 +9,7 @@
 require('D:/Projects/github/dida-autoloader--dev/src/Dida/Autoloader.php');
 \Dida\Autoloader::init();
 \Dida\Autoloader::addPsr4('Dida\\', 'D:/Projects/github/dida-form--dev/src/Dida');
+\Dida\Autoloader::addPsr4('Dida\\', 'D:/Projects/github/dida-html--dev/src/Dida');
 
 require('D:/Projects/github/dida-debug--dev/src/Dida/Debug/Debug.php');
 
