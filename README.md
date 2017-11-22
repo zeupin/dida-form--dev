@@ -1,9 +1,18 @@
 # Dida\Form 组件库
 
-`Dida\Form` 是一个Form生成器，可以方便地为Form生成对应HTML。它是 [宙品科技](http://zeupin.com) 开源的 [Dida框架](http://dida.zeupin.com) 的一个功能组件库。
+`Dida\Form` 是一个Form生成器，可以方便地生成Form的HTML代码。它是 [宙品科技](http://zeupin.com) 开源的 [Dida框架](http://dida.zeupin.com) 的一个功能组件库。
 
-* 源码： <https://github.com/zeupin/dida-form>
-* 文档： <https://github.com/zeupin/dida-form/wiki>
+* Home <https://github.com/zeupin/dida-form>
+* Dev  <https://github.com/zeupin/dida-form--dev>
+* Wiki <https://github.com/zeupin/dida-form/wiki>
+
+## 作者
+
+* [Macc Liu](https://github.com/maccliu)
+
+## 感谢
+
+* [宙品科技，Zeupin LLC](http://zeupin.com) , 尤其是 [Dida 框架团队](http://dida.zeupin.com)
 
 ## 版权声明
 
