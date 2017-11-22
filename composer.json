@@ -13,7 +13,8 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": "^5.4 || ^7.0"
+    "php": "^5.4 || ^7.0",
+    "dida/html": "dev-master"
   },
   "autoload": {
     "psr-4": {
