@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zeupin/dida-html.git",
-                "reference": "c4e54070ebc71491a76dc1029ba7cb2f9e8b89cb"
+                "reference": "2683beabaf8eae845f2a87f4117b816314469caf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zeupin/dida-html/zipball/c4e54070ebc71491a76dc1029ba7cb2f9e8b89cb",
-                "reference": "c4e54070ebc71491a76dc1029ba7cb2f9e8b89cb",
+                "url": "https://api.github.com/repos/zeupin/dida-html/zipball/2683beabaf8eae845f2a87f4117b816314469caf",
+                "reference": "2683beabaf8eae845f2a87f4117b816314469caf",
                 "shasum": ""
             },
             "require": {
@@ -42,7 +42,7 @@
             ],
             "description": "A HTML Component.",
             "homepage": "https://github.com/zeupin/dida-html",
-            "time": "2017-11-22T13:04:41+00:00"
+            "time": "2017-11-22T15:50:16+00:00"
         }
     ],
     "packages-dev": [],

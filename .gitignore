@@ -2,3 +2,4 @@
 /.php_cs.cache
 /phpcodeclean.php
 /vendor/
+composer.lock
