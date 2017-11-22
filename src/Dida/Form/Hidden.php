@@ -12,7 +12,7 @@ namespace Dida\Form;
 /**
  * Hidden
  */
-class Hidden extends Control
+class Hidden extends FormControl
 {
     /**
      * Version

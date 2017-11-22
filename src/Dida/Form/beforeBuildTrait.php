@@ -10,9 +10,9 @@
 namespace Dida\Form;
 
 /**
- * beforeBuildTrait
+ * BeforeBuildTrait
  */
-trait beforeBuildTrait
+trait BeforeBuildTrait
 {
 
 

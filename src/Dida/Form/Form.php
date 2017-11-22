@@ -9,8 +9,6 @@
 
 namespace Dida\Form;
 
-use \Dida\Form\Exceptions\FormException;
-
 /**
  * Form
  */
@@ -32,41 +30,13 @@ class Form
      * @var string
      */
     protected $method = null;
-
-    /**
-     * 所有表单控件。
-     *
-     * @var array
-     */
-    protected $controls = [];
-
-    /**
-     * 控件类型对应的类名
-     *
-     * @var array
-     */
-    protected $control_types = [
-        /* input */
-        'text'       => 'Dida\\Form\\Text',
-        'password'   => 'Dida\\Form\\Password',
-        'hidden'     => 'Dida\\Form\\Hidden',
-        'file'       => 'Dida\\Form\\File',
-        'statictext' => 'Dida\\Form\\StaticText', //
-
-        /* button */
-        'button' => 'Dida\\Form\\Button',
-        'reset'  => 'Dida\\Form\\Reset',
-        'submit' => 'Dida\\Form\\Submit', //
-
-        /* textarea */
-        'textarea' => 'Dida\\Form\\TextArea', //
-
-        /* group */
-        'select'        => 'Dida\\Form\\Select',
-        'radiogroup'    => 'Dida\\Form\\RadioGroup',
-        'checkboxgroup' => 'Dida\\Form\\CheckboxGroup', //
-    ];
     protected $formElement = null;
+
+
+    /**
+     * 表单控件
+     */
+    use FormControlTrait;
 
 
     /**
@@ -151,44 +121,6 @@ class Form
         $this->control_types[$type] = $class;
 
         return $this;
-    }
-
-
-    /**
-     * 向Form中新增一个控件。
-     *
-     * @param string $type
-     * @param string $name
-     * @param mixed $data
-     * @param string $index
-     *
-     * @return \Dida\Form\FormControl  返回生成的表单控件，供进一步设置
-     *
-     * @throws FormException
-     */
-    public function &add($type, $name = null, $data = null, $caption = null, $id = null, $index = null)
-    {
-        // 检查类型是否存在
-        $type = strtolower($type);
-        if (!array_key_exists($type, $this->control_types)) {
-            throw new FormException($type, FormException::TYPE_NOT_FOUND);
-        }
-
-        // 生成控件
-        $control = new $this->control_types[$type]($name, $data, $caption, $id);
-
-        // 把控件的Form属性指向当前Form
-        $control->setForm($this);
-
-        // 根据$index，决定把control加到当前Form的最后，还是覆盖掉同一index的原有控件。
-        if (is_string($index)) {
-            $this->controls[$index] = &$control;
-        } else {
-            $this->controls[] = &$control;
-        }
-
-        // 返回control的引用
-        return $control;
     }
 
 

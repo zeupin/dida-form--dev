@@ -12,7 +12,7 @@ namespace Dida\Form;
 /**
  * File
  */
-class File extends Control
+class File extends FormControl
 {
     /**
      * Version
@@ -23,7 +23,7 @@ class File extends Control
     /**
      * 提交前的共性处理
      */
-    use beforeBuildTrait;
+    use BeforeBuildTrait;
 
 
     protected function newCaptionZone()

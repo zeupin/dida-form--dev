@@ -10,9 +10,9 @@
 namespace Dida\Form;
 
 /**
- * Submit
+ * ResetButton
  */
-class Submit extends Control
+class ResetButton extends FormControl
 {
     /**
      * Version
@@ -23,7 +23,7 @@ class Submit extends Control
     /**
      * 提交前的共性处理
      */
-    use beforeBuildTrait;
+    use BeforeBuildTrait;
 
 
     protected function newCaptionZone()
@@ -34,7 +34,7 @@ class Submit extends Control
 
     protected function newInputZone()
     {
-        $this->inputZone->setTag('button', 'type="submit"');
+        $this->inputZone->setTag('button', 'type="reset"');
     }
 
 

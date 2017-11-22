@@ -12,7 +12,7 @@ namespace Dida\Form;
 /**
  * TextArea
  */
-class TextArea extends Control
+class TextArea extends FormControl
 {
     /**
      * Version
@@ -23,7 +23,7 @@ class TextArea extends Control
     /**
      * 提交前的共性处理
      */
-    use beforeBuildTrait;
+    use BeforeBuildTrait;
 
 
     protected function newCaptionZone()

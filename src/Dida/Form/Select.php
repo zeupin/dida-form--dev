@@ -10,9 +10,9 @@
 namespace Dida\Form;
 
 /**
- * Password
+ * Select
  */
-class Password extends FormControl
+class Select extends FormControl
 {
     /**
      * Version
@@ -21,6 +21,12 @@ class Password extends FormControl
 
 
     /**
+     * 选项集
+     */
+    use \Dida\Form\OptionSetTrait;
+
+
+/**
      * 提交前的共性处理
      */
     use BeforeBuildTrait;
@@ -34,15 +40,21 @@ class Password extends FormControl
 
     protected function newInputZone()
     {
-        $this->inputZone->setTag('input', 'type="password"');
+        $this->inputZone->setTag('select');
     }
 
 
     protected function beforeBuild()
     {
-        if (isset($this->data)) {
-            $value = $this->data;
-            $this->refInputZone()->setProp('value', htmlspecialchars($value));
+        // 处理 options
+        $options = $this->options->getAll();
+
+        // 逐一处理
+        foreach ($options as $option) {
+            $opt = $this->refInputZone()->addChild('option');
+            $opt->setInnerHTML($option['caption'])
+                ->setProp('value', $option['value'])
+                ->setProp('selected', $option['checked']);
         }
     }
 

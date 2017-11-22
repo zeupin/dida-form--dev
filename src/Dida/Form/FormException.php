@@ -7,7 +7,7 @@
  * Redistributions of files MUST retain the above copyright notice.
  */
 
-namespace Dida\Form\Exceptions;
+namespace Dida\Form;
 
 /**
  * FormException
@@ -33,7 +33,7 @@ class FormException extends \Exception
     /**
      * 控件类型未找到。
      */
-    const TYPE_NOT_FOUND = 1002;
+    const CONTROL_TYPE_NOT_FOUND = 1002;
 
     //////////////////////////////////////////////////////////
     // PropertySet 类
@@ -48,4 +48,5 @@ class FormException extends \Exception
      * 表单控件的属性值无效
      */
     const INVALID_PROPERTY_VALUE = 2002;
+
 }

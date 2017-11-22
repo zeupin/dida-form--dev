@@ -10,14 +10,20 @@
 namespace Dida\Form;
 
 /**
- * StaticText
+ * CheckboxGroup
  */
-class StaticText extends FormControl
+class CheckboxGroup extends FormControl
 {
     /**
      * Version
      */
     const VERSION = '20171120';
+
+
+    /**
+     * 选项集
+     */
+    use \Dida\Form\OptionSetTrait;
 
 
     protected function newCaptionZone()
@@ -39,9 +45,26 @@ class StaticText extends FormControl
             $this->refCaptionZone()->setInnerHTML($caption);
         }
 
-        if (isset($this->data)) {
-            $value = $this->data;
-            $this->refInputZone()->setInnerHTML(htmlspecialchars($value));
+        if (isset($this->bag['required'])) {
+            $this->refCaptionZone()->addChild()->setInnerHTML(' *');
+        }
+
+        // 设置 data
+        $this->check($this->data);
+
+        // 处理 options
+        $options = $this->options->getAll();
+
+        $name = $this->bag['name'];
+        foreach ($options as $index => $option) {
+            $this->refInputZone()
+                ->addChild('label')
+                ->addChild('input')->setProp('type', 'checkbox')
+                ->setName("{$name}___{$index}")
+                ->setProp('value', $option['value'])
+                ->setProp('checked', $option['checked'])
+                ->insertAfter()->setInnerHTML($option['caption'])
+            ;
         }
     }
 

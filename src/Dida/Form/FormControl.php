@@ -12,7 +12,7 @@ namespace Dida\Form;
 /**
  * Control
  */
-abstract class Control
+abstract class FormControl
 {
     /**
      * Version
@@ -92,6 +92,8 @@ abstract class Control
         if (!is_null($id)) {
             $this->setID($id);
         }
+
+        return $this;
     }
 
 
@@ -182,7 +184,7 @@ abstract class Control
     }
 
 
-    public function setCaption($caption, $type = Control::TEXT)
+    public function setCaption($caption, $type = self::TEXT)
     {
         if (is_null($caption)) {
             $this->bag['caption'] = $caption;
@@ -190,7 +192,7 @@ abstract class Control
         }
 
         switch ($type) {
-            case Control::TEXT:
+            case self::TEXT:
                 $caption = htmlspecialchars($caption);
                 $caption = nl2br($caption);
                 break;
