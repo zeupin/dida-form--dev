@@ -83,7 +83,7 @@ class FormTest extends TestCase
     public function test_reset()
     {
         $form = new Form();
-        $control = $form->add('reset')
+        $control = $form->add('resetbutton')
             ->setCaption("your intro")
             ->setData("your content");
 
@@ -95,7 +95,7 @@ class FormTest extends TestCase
     public function test_submit()
     {
         $form = new Form();
-        $control = $form->add('submit')
+        $control = $form->add('submitbutton')
             ->setCaption("your intro")
             ->setData("your content");
 

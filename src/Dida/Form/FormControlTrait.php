@@ -52,16 +52,40 @@ trait FormControlTrait
 
 
     /**
-     * 向Form中新增一个控件。
+     * 注册一个控件类型。
      *
-     * @param string $type
-     * @param string $name
-     * @param mixed $data
-     * @param string $index
-     *
-     * @return \Dida\Form\FormControl  返回生成的表单控件，供进一步设置
-     *
-     * @throws FormException
+     * @param string $type   类型名称，供调用控件时使用
+     * @param string $class   FQCN格式的类名
+     */
+    public function registerControlType($type, $class)
+    {
+        $type = strtolower($type);
+        $this->control_types[$type] = $class;
+
+        return $this;
+    }
+
+
+    /**
+     * @param \Dida\Form\FormControl $control
+     * @return \Dida\Form\FormControl
+     */
+    public function &addControl($control, $index = null)
+    {
+        $control->setForm($this);
+
+        if (is_null($index)) {
+            $this->controls[] = $control;
+        } else {
+            $this->controls[$index] = $control;
+        }
+
+        return $control;
+    }
+
+
+    /**
+     * @return \Dida\Form\FormControl
      */
     public function &add($type, $name = null, $data = null, $caption = null, $id = null, $index = null)
     {
@@ -75,41 +99,17 @@ trait FormControlTrait
         $control = new $this->control_types[$type]($name, $data, $caption, $id);
 
         // 把控件的Form属性指向当前Form
-        $control->setForm($this);
-
-        // 根据$index，决定把control加到当前Form的最后，还是覆盖掉同一index的原有控件。
-        if (is_string($index)) {
-            $this->controls[$index] = &$control;
-        } else {
-            $this->controls[] = &$control;
-        }
+        $this->addControl($control, $index);
 
         // 返回control的引用
         return $control;
     }
 
 
-    /**
-     * @param \Dida\Form\FormControl $control
-     * @param string $id
-     */
-    public function &addControl($control, $index = null)
-    {
-        $control->setForm($this);
-        if (is_null($index)) {
-            $this->controls[] = $control;
-        } else {
-            $this->controls[$index] = $control;
-        }
-
-        return $control;
-    }
-
-
-    public function &addStaticText($caption = null, $name = null, $data = null, $id = null)
+    public function &addStaticText($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new StaticText(null, $data, $caption, null);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -117,10 +117,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\Text
      */
-    public function &addText($caption = null, $name = null, $data = null, $id = null)
+    public function &addText($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new Text($name, $data, $caption, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -128,10 +128,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\Password
      */
-    public function &addPassword($caption = null, $name = null, $data = null, $id = null)
+    public function &addPassword($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new Password($name, $data, $caption, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -139,10 +139,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\Hidden
      */
-    public function &addHidden($caption = null, $name = null, $data = null, $id = null)
+    public function &addHidden($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new Hidden($name, $data, null, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -150,10 +150,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\File
      */
-    public function &addFile($caption = null, $name = null, $data = null, $id = null)
+    public function &addFile($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new File($name, $data, $caption, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -161,10 +161,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\TextArea
      */
-    public function &addTextArea($caption = null, $name = null, $data = null, $id = null)
+    public function &addTextArea($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new TextArea($name, $data, $caption, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -172,10 +172,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\Button
      */
-    public function &addButton($caption = null, $name = null, $data = null, $id = null)
+    public function &addButton($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new Button($name, $data, $caption, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -183,10 +183,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\ResetButton
      */
-    public function &addResetButton($caption = null, $name = null, $data = null, $id = null)
+    public function &addResetButton($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new ResetButton($name, $data, $caption, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -194,10 +194,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\SubmitButton
      */
-    public function &addSubmitButton($caption = null, $name = null, $data = null, $id = null)
+    public function &addSubmitButton($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new SubmitButton($name, $data, $caption, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -205,10 +205,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\Select
      */
-    public function &addSelect($caption = null, $name = null, $data = null, $id = null)
+    public function &addSelect($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new Select($name, $data, $caption, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -216,10 +216,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\RadioGroup
      */
-    public function &addRadioGroup($caption = null, $name = null, $data = null, $id = null)
+    public function &addRadioGroup($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new RadioGroup($name, $data, $caption, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 
@@ -227,10 +227,10 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\CheckboxGroup
      */
-    public function &addCheckboxGroup($caption = null, $name = null, $data = null, $id = null)
+    public function &addCheckboxGroup($caption = null, $name = null, $data = null, $id = null, $index = null)
     {
         $control = new CheckboxGroup($name, $data, $caption, $id);
-        $control->setForm($this);
+        $this->addControl($control, $index);
         return $control;
     }
 }

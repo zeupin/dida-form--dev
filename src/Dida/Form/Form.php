@@ -109,19 +109,7 @@ class Form
     }
 
 
-    /**
-     * 注册一个控件类型。
-     *
-     * @param string $type
-     * @param string $class
-     */
-    public function registerType($type, $class)
-    {
-        $type = strtolower($type);
-        $this->control_types[$type] = $class;
 
-        return $this;
-    }
 
 
     /**
