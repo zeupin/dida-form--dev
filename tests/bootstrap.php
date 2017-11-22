@@ -12,4 +12,5 @@ require('D:/Projects/github/dida-autoloader--dev/src/Dida/Autoloader.php');
 
 require('D:/Projects/github/dida-debug--dev/src/Dida/Debug/Debug.php');
 
+require __DIR__ . '/../vendor/autoload.php';
 require('D:/Projects/github/composer/vendor/autoload.php');

@@ -47,7 +47,7 @@ class Form
      */
     public function __construct($action = null, $method = 'get', $name = null, $id = null)
     {
-        $this->formElement = new HtmlElement('form');
+        $this->formElement = new \Dida\Html\ActiveElement('form');
 
         // method要特别处理一下
         $this->setMethod($method);

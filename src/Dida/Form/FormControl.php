@@ -47,27 +47,27 @@ abstract class FormControl
     protected $form = null;
 
     /**
-     * @var \Dida\Form\HtmlElement
+     * @var \Dida\Html\ActiveElement
      */
     protected $controlZone = null;
 
     /**
-     * @var \Dida\Form\HtmlElement
+     * @var \Dida\Html\ActiveElement
      */
     protected $captionZone = null;
 
     /**
-     * @var \Dida\Form\HtmlElement
+     * @var \Dida\Html\ActiveElement
      */
     protected $inputZone = null;
 
     /**
-     * @var \Dida\Form\HtmlElement
+     * @var \Dida\Html\ActiveElement
      */
     protected $helpZone = null;
 
     /**
-     * @var \Dida\Form\HtmlElement
+     * @var \Dida\Html\ActiveElement
      */
     protected $messageZone = null;
 
@@ -109,24 +109,24 @@ abstract class FormControl
 
 
     /**
-     * @var \Dida\Form\HtmlElement
+     * @var \Dida\Html\ActiveElement
      */
     public function &refControlZone()
     {
         if (!$this->controlZone) {
-            $this->controlZone = new \Dida\Form\HtmlElement();
+            $this->controlZone = new \Dida\Html\ActiveElement();
         }
         return $this->controlZone;
     }
 
 
     /**
-     * @var \Dida\Form\HtmlElement
+     * @var \Dida\Html\ActiveElement
      */
     public function &refCaptionZone()
     {
         if (!$this->captionZone) {
-            $this->captionZone = new \Dida\Form\HtmlElement();
+            $this->captionZone = new \Dida\Html\ActiveElement();
             $this->newCaptionZone();
         }
         return $this->captionZone;
@@ -134,12 +134,12 @@ abstract class FormControl
 
 
     /**
-     * @var \Dida\Form\HtmlElement
+     * @var \Dida\Html\ActiveElement
      */
     public function &refInputZone()
     {
         if (!$this->inputZone) {
-            $this->inputZone = new \Dida\Form\HtmlElement();
+            $this->inputZone = new \Dida\Html\ActiveElement();
             $this->newInputZone();
         }
         return $this->inputZone;
@@ -147,24 +147,24 @@ abstract class FormControl
 
 
     /**
-     * @var \Dida\Form\HtmlElement
+     * @var \Dida\Html\ActiveElement
      */
     public function &refHelpZone()
     {
         if (!$this->helpZone) {
-            $this->helpZone = new \Dida\Form\HtmlElement();
+            $this->helpZone = new \Dida\Html\ActiveElement();
         }
         return $this->helpZone;
     }
 
 
     /**
-     * @var \Dida\Form\HtmlElement
+     * @var \Dida\Html\ActiveElement
      */
     public function &refMessageZone()
     {
         if (!$this->messageZone) {
-            $this->messageZone = new \Dida\Form\HtmlElement();
+            $this->messageZone = new \Dida\Html\ActiveElement();
         }
         return $this->messageZone;
     }
