@@ -61,15 +61,4 @@ trait OptionSetTrait
         $this->options->setOptionDisableds($array);
         return $this;
     }
-
-
-    public function check($data)
-    {
-        if (is_array($data)) {
-            $this->options->check($data);
-        } elseif (!is_null($data)) {
-            $this->options->check([$data]);
-        }
-        return $this;
-    }
 }

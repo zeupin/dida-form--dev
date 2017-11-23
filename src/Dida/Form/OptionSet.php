@@ -19,6 +19,12 @@ class OptionSet
      */
     const VERSION = '20171119';
 
+    /*
+     * check() 用到的类型常数
+     */
+    const CHECK_VALUE = 0;
+    const CHECK_VALUE_OR_CAPTION = 1;
+
     /**
      * options数组。
      *
@@ -191,10 +197,34 @@ class OptionSet
 
 
     /**
-     * @param array $values   一维数组，[ value ]
+     * 根据数据来决定是否check。
+     *
+     * @param mixed|null $data
+     * @param int $checktype
+     *      0 只检查value
+     *      1 有value匹配value，没有value匹配caption。
+     *
+     * @return $this
      */
-    public function check(array $values)
+    public function check($data, $checktype = self::CHECK_VALUE)
     {
+        if (is_null($data)) {
+            return $this;
+        }
+
+        // 如果是标量，先将其转为数组
+        if (is_scalar($data)) {
+            $data = [$data];
+        }
+
+        if (!is_array($data)) {
+            throw new FormException(null, FormException::DATA_TYPE_ERROR);
+        }
+
+        if ($data === []) {
+            return $this;
+        }
+
         foreach ($this->options as $index => $option) {
             // 如果当前项是disabled，跳过
             if ($this->get($index, 'disabled')) {
@@ -203,13 +233,13 @@ class OptionSet
 
             // 有value比较value，没有value比较caption，都没有则设置为null
             if (isset($option['value'])) {
-                $this->options[$index]['checked'] = (in_array($option['value'], $values));
+                $this->options[$index]['checked'] = (in_array($option['value'], $data));
                 continue;
-            } elseif (isset($option['caption'])) {
-                $this->options[$index]['checked'] = (in_array($option['caption'], $values));
+            } elseif (isset($option['caption']) && ($checktype === self::CHECK_VALUE_OR_CAPTION)) {
+                $this->options[$index]['checked'] = (in_array($option['caption'], $data));
                 continue;
             } else {
-                $this->options[$index]['checked'] = false;
+                $this->options[$index]['checked'] = null;
                 continue;
             }
         }
