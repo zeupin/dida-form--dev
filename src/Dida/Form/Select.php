@@ -17,7 +17,7 @@ class Select extends FormControl
     /**
      * Version
      */
-    const VERSION = '20171120';
+    const VERSION = '20171123';
 
 
     /**
@@ -46,6 +46,9 @@ class Select extends FormControl
 
     protected function beforeBuild()
     {
+        // 处理数据
+        $this->options->check($this->data, OptionSet::CHECK_VALUE_OR_CAPTION);
+
         // 处理 options
         $options = $this->options->getAll();
 
