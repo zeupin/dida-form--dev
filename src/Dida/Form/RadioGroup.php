@@ -17,12 +17,14 @@ class RadioGroup extends FormControl
     /**
      * Version
      */
-    const VERSION = '20171120';
+    const VERSION = '20171123';
+
 
     /**
      * 选项集
      */
-    use \Dida\Form\OptionSetTrait;
+    use OptionSetTrait;
+
 
     /**
      * 提交前的共性处理
@@ -55,7 +57,7 @@ class RadioGroup extends FormControl
 
         // 设置 data
         if (is_scalar($this->data)) {
-            $this->options->check([$this->data]);
+            $this->options->check($this->data);
         }
 
         // 处理 options
@@ -69,7 +71,7 @@ class RadioGroup extends FormControl
                 ->setName($name)
                 ->setProp('value', $option['value'])
                 ->setProp('checked', $option['checked'])
-                ->insertAfter()->setInnerHTML($option['caption'])
+                ->addAfter()->setInnerHTML($option['caption'])
             ;
         }
     }
