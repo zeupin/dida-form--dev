@@ -17,7 +17,7 @@ class OptionSet
     /**
      * Version
      */
-    const VERSION = '20171119';
+    const VERSION = '20171123';
 
     /*
      * check() 用到的类型常数
@@ -137,9 +137,41 @@ class OptionSet
 
 
     /**
+     * 清空options。
+     *
+     * @return $this
+     */
+    public function initOptions()
+    {
+        $this->options = [];
+        return $this;
+    }
+
+
+    /**
+     * 批量设置options。
+     *
+     * @param array $options  二维数组
+     *
+     * @return $this
+     */
+    public function setOptions($options)
+    {
+        foreach ($options as $index => $option) {
+            $origin = (array_key_exists($index, $this->options)) ? $this->options[$index] : [];
+            $this->options[$index] = array_merge($this->newoption, $origin, $option);
+        }
+
+        return $this;
+    }
+
+
+    /**
      * 批量设置options的caption。
      *
      * @param array $array   [ index => caption ]
+     *
+     * @return $this
      */
     public function setOptionCaptions(array $array)
     {
@@ -155,6 +187,8 @@ class OptionSet
      * 批量设置options的value。
      *
      * @param array $array   [ index => value ]
+     *
+     * @return $this
      */
     public function setOptionValues(array $array)
     {
@@ -170,6 +204,8 @@ class OptionSet
      * 批量设置options的默认checked。
      *
      * @param array $array   [ index => checked ]
+     *
+     * @return $this
      */
     public function setOptionCheckeds(array $array)
     {
@@ -185,6 +221,8 @@ class OptionSet
      * 批量设置options的默认disabled。
      *
      * @param array $array   [ index => disabled ]
+     *
+     * @return $this
      */
     public function setOptionDisableds(array $array)
     {
