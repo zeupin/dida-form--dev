@@ -70,7 +70,7 @@ trait FormControlTrait
      * @param \Dida\Form\FormControl $control
      * @return \Dida\Form\FormControl
      */
-    public function &addControl($control, $index = null)
+    public function addControl($control, $formkey = null)
     {
         $control->setForm($this);
 
@@ -87,7 +87,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\FormControl
      */
-    public function &add($type, $name = null, $data = null, $caption = null, $id = null, $index = null)
+    public function add($type, $name = null, $data = null, $caption = null, $id = null, $formkey = null)
     {
         // 检查类型是否存在
         $type = strtolower($type);
@@ -106,7 +106,7 @@ trait FormControlTrait
     }
 
 
-    public function &addStaticText($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addStaticText($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new StaticText(null, $data, $caption, null);
         $this->addControl($control, $index);
@@ -117,7 +117,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\Text
      */
-    public function &addText($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addText($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new Text($name, $data, $caption, $id);
         $this->addControl($control, $index);
@@ -128,7 +128,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\Password
      */
-    public function &addPassword($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addPassword($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new Password($name, $data, $caption, $id);
         $this->addControl($control, $index);
@@ -139,7 +139,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\Hidden
      */
-    public function &addHidden($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addHidden($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new Hidden($name, $data, null, $id);
         $this->addControl($control, $index);
@@ -150,7 +150,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\File
      */
-    public function &addFile($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addFile($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new File($name, $data, $caption, $id);
         $this->addControl($control, $index);
@@ -161,7 +161,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\TextArea
      */
-    public function &addTextArea($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addTextArea($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new TextArea($name, $data, $caption, $id);
         $this->addControl($control, $index);
@@ -172,7 +172,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\Button
      */
-    public function &addButton($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addButton($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new Button($name, $data, $caption, $id);
         $this->addControl($control, $index);
@@ -183,7 +183,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\ResetButton
      */
-    public function &addResetButton($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addResetButton($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new ResetButton($name, $data, $caption, $id);
         $this->addControl($control, $index);
@@ -194,7 +194,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\SubmitButton
      */
-    public function &addSubmitButton($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addSubmitButton($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new SubmitButton($name, $data, $caption, $id);
         $this->addControl($control, $index);
@@ -205,7 +205,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\Select
      */
-    public function &addSelect($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addSelect($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new Select($name, $data, $caption, $id);
         $this->addControl($control, $index);
@@ -216,7 +216,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\RadioGroup
      */
-    public function &addRadioGroup($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addRadioGroup($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new RadioGroup($name, $data, $caption, $id);
         $this->addControl($control, $index);
@@ -227,7 +227,7 @@ trait FormControlTrait
     /**
      * @return \Dida\Form\CheckboxGroup
      */
-    public function &addCheckboxGroup($caption = null, $name = null, $data = null, $id = null, $index = null)
+    public function addCheckboxGroup($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new CheckboxGroup($name, $data, $caption, $id);
         $this->addControl($control, $index);

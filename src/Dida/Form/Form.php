@@ -9,6 +9,8 @@
 
 namespace Dida\Form;
 
+use \Dida\Html\ActiveElement;
+
 /**
  * Form
  */
@@ -51,7 +53,8 @@ class Form
      */
     public function __construct($action = null, $method = 'post', $id = null)
     {
-        $this->formElement = new \Dida\Html\ActiveElement('form');
+        $this->formElement = ActiveElement::make("form")
+                ->setProp('action', $action)->setID($id);
 
         // method要特别处理一下
         $this->setMethod($method);
