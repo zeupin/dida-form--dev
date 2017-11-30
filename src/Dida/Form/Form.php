@@ -30,6 +30,10 @@ class Form
      * @var string
      */
     protected $method = null;
+
+    /**
+     * @var \Dida\Html\ActiveElement
+     */
     protected $formElement = null;
 
 
@@ -45,7 +49,7 @@ class Form
      * @param string $name
      * @param string $id
      */
-    public function __construct($action = null, $method = 'get', $name = null, $id = null)
+    public function __construct($action = null, $method = 'post', $id = null)
     {
         $this->formElement = new \Dida\Html\ActiveElement('form');
 
@@ -103,7 +107,11 @@ class Form
     }
 
 
-    public function &refFormElement()
+    /**
+     * 返回表单元素
+     * @return \Dida\Html\ActiveElement
+     */
+    public function refFormElement()
     {
         return $this->formElement;
     }
