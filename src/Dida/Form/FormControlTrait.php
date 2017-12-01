@@ -74,10 +74,10 @@ trait FormControlTrait
     {
         $control->setForm($this);
 
-        if (is_null($index)) {
+        if (is_null($formkey)) {
             $this->controls[] = $control;
         } else {
-            $this->controls[$index] = $control;
+            $this->controls[$formkey] = $control;
         }
 
         return $control;
@@ -99,7 +99,7 @@ trait FormControlTrait
         $control = new $this->control_types[$type]($name, $data, $caption, $id);
 
         // 把控件的Form属性指向当前Form
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
 
         // 返回control的引用
         return $control;
@@ -109,7 +109,7 @@ trait FormControlTrait
     public function addStaticText($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new StaticText(null, $data, $caption, null);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -120,7 +120,7 @@ trait FormControlTrait
     public function addText($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new Text($name, $data, $caption, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -131,7 +131,7 @@ trait FormControlTrait
     public function addPassword($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new Password($name, $data, $caption, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -142,7 +142,7 @@ trait FormControlTrait
     public function addHidden($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new Hidden($name, $data, null, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -153,7 +153,7 @@ trait FormControlTrait
     public function addFile($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new File($name, $data, $caption, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -164,7 +164,7 @@ trait FormControlTrait
     public function addTextArea($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new TextArea($name, $data, $caption, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -175,7 +175,7 @@ trait FormControlTrait
     public function addButton($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new Button($name, $data, $caption, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -186,7 +186,7 @@ trait FormControlTrait
     public function addResetButton($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new ResetButton($name, $data, $caption, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -197,7 +197,7 @@ trait FormControlTrait
     public function addSubmitButton($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new SubmitButton($name, $data, $caption, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -208,7 +208,7 @@ trait FormControlTrait
     public function addSelect($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new Select($name, $data, $caption, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -219,7 +219,7 @@ trait FormControlTrait
     public function addRadioGroup($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new RadioGroup($name, $data, $caption, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 
@@ -230,7 +230,7 @@ trait FormControlTrait
     public function addCheckboxGroup($caption = null, $name = null, $data = null, $id = null, $formkey = null)
     {
         $control = new CheckboxGroup($name, $data, $caption, $id);
-        $this->addControl($control, $index);
+        $this->addControl($control, $formkey);
         return $control;
     }
 }

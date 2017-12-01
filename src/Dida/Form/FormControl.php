@@ -9,6 +9,8 @@
 
 namespace Dida\Form;
 
+use \Dida\Html\ActiveElement;
+
 /**
  * Control
  */
@@ -93,6 +95,12 @@ abstract class FormControl
             $this->setID($id);
         }
 
+        $this->controlZone = new ActiveElement();
+        $this->captionZone = $this->controlZone->addChild();
+        $this->inputZone = $this->controlZone->addChild();
+        $this->helpZone = $this->controlZone->addChild();
+        $this->messageZone = $this->controlZone->addChild();
+
         return $this;
     }
 
@@ -111,11 +119,8 @@ abstract class FormControl
     /**
      * @var \Dida\Html\ActiveElement
      */
-    public function &refControlZone()
+    public function refControlZone()
     {
-        if (!$this->controlZone) {
-            $this->controlZone = new \Dida\Html\ActiveElement();
-        }
         return $this->controlZone;
     }
 
@@ -123,12 +128,9 @@ abstract class FormControl
     /**
      * @var \Dida\Html\ActiveElement
      */
-    public function &refCaptionZone()
+    public function refCaptionZone()
     {
-        if (!$this->captionZone) {
-            $this->captionZone = new \Dida\Html\ActiveElement();
-            $this->newCaptionZone();
-        }
+        $this->newCaptionZone();
         return $this->captionZone;
     }
 
@@ -136,12 +138,9 @@ abstract class FormControl
     /**
      * @var \Dida\Html\ActiveElement
      */
-    public function &refInputZone()
+    public function refInputZone()
     {
-        if (!$this->inputZone) {
-            $this->inputZone = new \Dida\Html\ActiveElement();
-            $this->newInputZone();
-        }
+        $this->newInputZone();
         return $this->inputZone;
     }
 
@@ -149,11 +148,8 @@ abstract class FormControl
     /**
      * @var \Dida\Html\ActiveElement
      */
-    public function &refHelpZone()
+    public function refHelpZone()
     {
-        if (!$this->helpZone) {
-            $this->helpZone = new \Dida\Html\ActiveElement();
-        }
         return $this->helpZone;
     }
 
@@ -161,11 +157,8 @@ abstract class FormControl
     /**
      * @var \Dida\Html\ActiveElement
      */
-    public function &refMessageZone()
+    public function refMessageZone()
     {
-        if (!$this->messageZone) {
-            $this->messageZone = new \Dida\Html\ActiveElement();
-        }
         return $this->messageZone;
     }
 
@@ -235,24 +228,11 @@ abstract class FormControl
      */
     public function build()
     {
-        // 准备innerHTML
-        $output = [];
-        if ($this->captionZone) {
-            $output[] = $this->captionZone->build();
-        }
-        if ($this->inputZone) {
-            $output[] = $this->inputZone->build();
-        }
-        if ($this->helpZone) {
-            $output[] = $this->helpZone->build();
-        }
-        if ($this->messageZone) {
-            $output[] = $this->messageZone->build();
-        }
+        $this->newCaptionZone();
+        $this->newInputZone();
 
         // control
         $control = $this->refControlZone();
-        $control->setInnerHTML(implode('', $output));
         return $control->build();
     }
 }
